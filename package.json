@@ -3,11 +3,18 @@
   "version": "0.0.3",
   "author": "Benoit d'Oncieu <bdoncieu@gmail.com>",
   "description": "Allow you to commit with more than one person, e.g. Pair programming or Mob programming.",
-  "homepage": "https://github.com/bdo/gitpair.git#readme",
-  "readme": "https://github.com/bdo/gitpair.git#readme",
+  "homepage": "https://github.com/bdo/gitpair.git",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bdo/gitpair.git"
+    "url": "https://github.com/bdo/gitpair.git"
+  },
+  "keywords": [
+    "git",
+    "pair-programming",
+    "mob-programming",
+  ],
+  "bugs": {
+    "url": "https://github.com/bdo/gitpair.git/issues"
   },
   "scripts": {
     "postinstall": "node scripts/install.js",
