@@ -22,7 +22,7 @@ if (process.argv[2] == '--uninstall') {
 
 function getClosestGitPath(currentPath) {
   currentPath = currentPath || '.';
-  console.log(currentPath);
+
   const dir = path.join(currentPath, '.git');
   if (fs.existsSync(dir)) {
     return dir;
