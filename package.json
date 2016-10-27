@@ -1,0 +1,13 @@
+{
+  "name": "gitpair",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bdo/gitpair.git"
+  },
+  "scripts": {
+    "postinstall": "node scripts/install.js",
+    "preuninstall": "node scripts/uninstall.js"
+  },
+  "main": "lib/index"
+}
