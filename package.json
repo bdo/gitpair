@@ -1,13 +1,14 @@
 {
   "name": "gitpair",
   "version": "0.0.1",
+  "description": "Allow you to commit with more than one person, e.g. Pair programming or Mob programming.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bdo/gitpair.git"
   },
   "scripts": {
     "postinstall": "node scripts/install.js",
-    "preuninstall": "node scripts/uninstall.js"
+    "preuninstall": "node scripts/install.js --uninstall"
   },
-  "main": "lib/index"
+  "main": "lib/index.js"
 }
