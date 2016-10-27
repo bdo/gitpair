@@ -1,6 +1,6 @@
 {
   "name": "gitpair",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Allow you to commit with more than one person, e.g. Pair programming or Mob programming.",
   "repository": {
     "type": "git",
