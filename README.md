@@ -18,10 +18,10 @@ Gitpair does not require you to change the way you commit. Simplify use the `git
 ### Example:
 The following two commits
 ```
-# commit -am "JBH|BDO|JON Added README file"
+$ commit -am "JBH|BDO|JON Added README file"
 ```
 ```
-# commit -am "@jordan @benoit @jonathan Added README file"
+$ commit -am "@jordan @benoit @jonathan Added README file"
 ```
 are equivalent and will result in the following commit:
 ```
@@ -39,7 +39,7 @@ The _author's_ name contains the list of all author names while the _author_ and
 ## Installation
 
 ```
-# npm install gitpair
+$ npm install gitpair
 ```
 The installation adds a `post-commit` hook at the root of your project in the `.git/hooks` directory.
 
@@ -80,6 +80,6 @@ Notes:
 ## Uninstall
 
 ```
-# npm uninstall gitpair
+$ npm uninstall gitpair
 ```
 This removes the `post-commit` hook which was added during the install.
