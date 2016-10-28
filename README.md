@@ -3,21 +3,28 @@
 When pairing or doing mob programming on github projects, it is not possible to commit with all the names of people who contributed. 
 Gitpair allows you to setup your team members and commit as normal. 
 It then changes your commit based on the list of people referenced in the commit message.
+Each author is randomly credited with commiter or authorship. This is so we can be credited in our github contributions view.
+
+### Before Gitpair :sob:
+![before](https://github.com/bdo/gitpair/raw/master/docs/before-gitpair.png)
+
+### After Gitpair :heart_eyes:
+![after](https://github.com/bdo/gitpair/raw/master/docs/after-gitpair.png)
 
 Gitpair does not require you to change the way you commit. Simplify use the `git commit` command or your favorite tool! 
 
 ### Example:
 The following two commits
 ```
-# commit -am "BDO|JON Added README file"
+# commit -am "JBH|BDO|JON Added README file"
 ```
 ```
-# commit -am "@benoit @jonathan Added README file"
+# commit -am "@jordan @benoit @jonathan Added README file"
 ```
 are equivalent and will result in the following commit:
 ```
 commit 5aac6c15b7ea2b8ed6b8daaba01539931b9d9309
-Author:     Benoit d'Oncieu and Jon McClennon <bdoncieu@gmail.com>
+Author:     Jordan Bartholomew-Harrison, Benoit d'Oncieu and Jon McClennon <bdoncieu@gmail.com>
 AuthorDate: Thu Oct 27 22:09:34 2016 +0200
 Commit:     Jon McClennon <Jon.McClennon@gmail.com>
 CommitDate: Thu Oct 27 22:09:34 2016 +0200
@@ -27,16 +34,16 @@ CommitDate: Thu Oct 27 22:09:34 2016 +0200
 
 The _author's_ name contains the list of all author names while the _author_ and _committer_ emails will be *randomly* choosen amongst the list of committers. The commit message is normalised as a pipe separated list of  initials followed by a dash. 
 
-## Install
+## Installation
 
 ```
 # npm install gitpair
 ```
-The installation adds a `post-commit` hook in the `.git/hooks` directory which amends the commit.
+The installation adds a `post-commit` hook at the root of your project in the `.git/hooks` directory.
 
 *Note:* Do not install globally with `npm install -g` as it won't work :wink:
 
-## Configure
+## Configuration
 
 Create a `.gitpair` file in your user home folder. For instance:
 
