@@ -3,7 +3,9 @@
 When pairing or doing mob programming on github projects, it is not possible to commit with all the names of people who contributed. 
 Gitpair allows you to setup your team members and commit as normal. 
 It then changes your commit based on the list of people referenced in the commit message.
-Each author is randomly credited with commiter or authorship. This is so we can be credited in our github contributions view.
+Each author is randomly credited with commiter or authorship.
+
+So we can now be credited in our github contributions view !
 
 ### Before Gitpair :sob:
 ![before](https://github.com/bdo/gitpair/raw/master/docs/before-gitpair.png)
