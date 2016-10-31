@@ -1,11 +1,9 @@
 # Gitpair
 
-When pairing or doing mob programming on github projects, it is not possible to commit with all the names of people who contributed. 
-Gitpair allows you to setup your team members and commit as normal. 
-It then changes your commit based on the list of people referenced in the commit message.
-Each author is randomly credited with commiter or authorship.
+When pairing or doing mob programming on github projects, git does not allow us to commit with all the names of people who contributed. 
+Gitpair allows you to setup your team members and commit as normal. It then changes your commit based on the list of people referenced in the commit message.
 
-So we can now be credited in our github contributions view !
+Each author will randomly be credited with commiter or authorship, so that we can each be credited in our github contributions view !
 
 ### Before Gitpair :sob:
 ![before](https://github.com/bdo/gitpair/raw/master/docs/before-gitpair.png)
@@ -38,6 +36,12 @@ The _author's_ name contains the list of all author names while the _author_ and
 
 ## Installation
 
+### Pre-requisites
+
+A recent version of `node` and `npm`.
+
+### Install
+
 ```
 $ npm install gitpair
 ```
@@ -45,7 +49,7 @@ The installation adds a `post-commit` hook at the root of your project in the `.
 
 *Note:* Do not install globally with `npm install -g` as it won't work :wink:
 
-## Configuration
+### Configure
 
 Create a `.gitpair` file in your user home folder. For instance:
 
