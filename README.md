@@ -1,6 +1,7 @@
-<div style="text-align=center">
-    <img src=https://github.com/bdo/gitpair/raw/logo/docs/logo.png width=60 />
-</div>
+<h1 align="center">
+    <img src=https://github.com/bdo/gitpair/raw/logo/docs/logo.png width=90><br>
+    gitpair
+</h1>
 
 # gitpair
 
