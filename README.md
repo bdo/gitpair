@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img src=https://github.com/bdo/gitpair/raw/logo/docs/logo.png width=90><br>
+    <img src=https://github.com/bdo/gitpair/raw/master/docs/logo.png width=90><br>
     gitpair
 </h1>
 
