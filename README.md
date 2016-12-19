@@ -3,8 +3,6 @@
     gitpair
 </h1>
 
-# gitpair
-
 When pairing or doing mob programming on github projects, git does not allow us to commit with all the names of people who contributed. 
 gitpair allows you to setup your team members and commit as normal. It then changes your commit based on the list of people referenced in the commit message.
 
