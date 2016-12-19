@@ -1,17 +1,21 @@
-# Gitpair
+<div style="text-align=center">
+    <img src=https://github.com/bdo/gitpair/raw/logo/docs/logo.png width=60 />
+</div>
+
+# gitpair
 
 When pairing or doing mob programming on github projects, git does not allow us to commit with all the names of people who contributed. 
-Gitpair allows you to setup your team members and commit as normal. It then changes your commit based on the list of people referenced in the commit message.
+gitpair allows you to setup your team members and commit as normal. It then changes your commit based on the list of people referenced in the commit message.
 
 Each author will randomly be credited with commiter or authorship, so that we can each be credited in our github contributions view !
 
-### Before Gitpair :sob:
+### Before gitpair :sob:
 ![before](https://github.com/bdo/gitpair/raw/master/docs/before-gitpair.png)
 
-### After Gitpair :heart_eyes:
+### After gitpair :heart_eyes:
 ![after](https://github.com/bdo/gitpair/raw/master/docs/after-gitpair.png)
 
-Gitpair does not require you to change the way you commit. Simplify use the `git commit` command or your favorite tool! 
+gitpair does not require you to change the way you commit. Simplify use the `git commit` command or your favorite tool! 
 
 ### Example:
 The following two commits
