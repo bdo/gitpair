@@ -16,9 +16,15 @@
   "bugs": {
     "url": "https://github.com/bdo/gitpair.git/issues"
   },
-  "scripts": {
-    "postinstall": "node scripts/install.js",
-    "preuninstall": "node scripts/install.js --uninstall"
+  "main": "./src/index.js",
+  "bin": {
+    "gitpair": "./src/index.js"
   },
-  "main": "lib/index.js"
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^3.5.3"
+  },
+  "dependencies": {
+    "argparse": "^1.0.9"
+  }
 }
