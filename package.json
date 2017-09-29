@@ -1,6 +1,6 @@
 {
   "name": "gitpair",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "author": "Benoit d'Oncieu <bdoncieu@gmail.com>",
   "description": "Allow you to commit with more than one person, e.g. Pair programming or Mob programming.",
   "homepage": "https://github.com/bdo/gitpair.git",
@@ -25,6 +25,10 @@
     "mocha": "^3.5.3"
   },
   "dependencies": {
-    "argparse": "^1.0.9"
+    "argparse": "^1.0.9",
+    "enquirer": "^1.0.2",
+    "prompt-confirm": "^1.2.0",
+    "prompt-question": "^5.0.2",
+    "request": "^2.83.0"
   }
 }
