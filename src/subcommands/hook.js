@@ -14,7 +14,8 @@ module.exports = (args) => {
   const team = getTeamMembers(configPath);
 
   git.readLastCommitMsg(function (commitMsg) {
-    const authorTokens = getAuthorsFullMatch(commitMsg)
+    const authorTokens =
+      getAuthorsFullMatch(commitMsg)
       .split(/[@|: ]/)
       .filter(isDefined);
 
@@ -27,23 +28,42 @@ module.exports = (args) => {
         return memo
       }, [])
 
+    const authorsOutsideTeam =
+      authors
+      .filter(function (author) { return !authorInTeam(author, team) })
+
+    // TODO: Ask to get their github information, fill in missing emails when necessary
+
     if (authors.length > 0) {
-      const commitMsgWithoutAuthors = commitMsg
+      const commitMsgWithoutAuthors =
+        commitMsg
         .slice(authorsFullMatch.length);
 
-      const message = authors
-        .map(author => author.aliases[0].toUpperCase())
+      const message =
+        authors
+        .map(function (author) { return author.aliases[0].toUpperCase() })
         .join('|') + ': ' + commitMsgWithoutAuthors;
 
-      const [author, committer] = randomlySelectAuthorAndCommitter(authors)
+      const authorAndCommitter = randomlySelectAuthorAndCommiter(authors);
+      const author = authorAndCommitter[0];
+      const committer = authorAndCommitter[1];
       log.log('Setting author to %s, and committer to %s', author.name, committer.name);
       git.amendLastCommitMsg(message, author, committer)
+
+      // TODO: Ask if they want to add any authors not currently in their team to .gitpair
 
     } else {
       log.log('No gitpair authors, leaving commit unchanged.')
 
     }
   });
+}
+
+
+function authorInTeam (author, team) {
+  return team.find(function (member) {
+    return member.aliases.indexOf(author) >= 0;
+  })
 }
 
 
