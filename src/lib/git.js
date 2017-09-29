@@ -12,7 +12,7 @@ module.exports.amendLastCommitMsg = (message, author, committer) => {
     'ALREADY_INSIDE_GITPAIR=1',
     'git commit --amend',
     `--message '${escapeQuotesForBash(message)}'`,
-    `--author='${escapeQuotesForBash(authorsNames)} <${escapeQuotesForBash(author.email)}>'`
+    `--author='${escapeQuotesForBash(author.names)} <${escapeQuotesForBash(author.email)}>'`
   ].join(' '));
 }
 
