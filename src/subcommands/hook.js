@@ -1,27 +1,31 @@
 const path = require('path');
 const fs = require('fs');
 
-const git = require("./git.js")
-const log = require("./log.js")
-
-const USER_HOME = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
+const git = require("../lib/git.js")
+const github = require("../lib/github.js")
+const log = require("../lib/log.js")
+const closestPath = require("../lib/closestPath.js")
 
 
 module.exports = (args) => {
   if (process.env.ALREADY_INSIDE_GITPAIR) process.exit(0);
 
-  const configPath = args.path || USER_HOME;
+  const configPath = args.path || closestPath.DEFAULT_GITPAIR_PATH;
   const team = getTeamMembers(configPath);
 
-
-  git.readLastCommitMsg((commitMsg) => {
-    const authorsTokens = getAuthorsFullMatch(commitMsg);
+  git.readLastCommitMsg(function (commitMsg) {
+    const authorTokens = getAuthorsFullMatch(commitMsg)
       .split(/[@|: ]/)
-      .filter(isDefined)
-
-    const authors = [...new Set(authorTokens)];
-      .map((alias) => findTeamMemberByAlias(team, alias))
       .filter(isDefined);
+
+    const authors =
+      authorTokens
+      .reduce(function (memo, token) {
+        if (token && memo.indexOf(token) === -1) {
+          return memo.concat(token)
+        }
+        return memo
+      }, [])
 
     if (authors.length > 0) {
       const commitMsgWithoutAuthors = commitMsg
@@ -77,7 +81,7 @@ function getTeamMembers(configPath) {
 
   } catch (err) {
     if (err.code === 'ENOENT') {
-      error(`Could not find ${file}. Gitpair needs this file to work...`);
+      log.error(`Could not find ${file}. Gitpair needs this file to work...`);
       process.exit(0);
     }
 
