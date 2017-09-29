@@ -46,15 +46,34 @@ A recent version of `node` and `npm`.
 ### Install
 
 ```
-$ npm install gitpair
+$ npm install --save gitpair
 ```
+
+#### With [husky](https://github.com/typicode/husky)
+
+Update your package.json to run the hook script:
+
+```json
+{
+  ...
+  "scripts": {
+    "postcommit": "$(npm bin)/gitpair hook"
+  }
+}
+```
+
+#### Manually adding the hook
+
+```bash
+$(npm bin)/gitpair install
+```
+
 The installation adds a `post-commit` hook at the root of your project in the `.git/hooks` directory.
 
-*Note:* Do not install globally with `npm install -g` as it won't work :wink:
 
 ### Configure
 
-Create a `.gitpair` file in your user home folder. For instance:
+Create a `.gitpair` file in your project or home folder:
 
 ```json
 {
@@ -72,6 +91,12 @@ Create a `.gitpair` file in your user home folder. For instance:
 }
 ```
 
+In a project, you can get this file started by running:
+
+```bash
+$(npm bin)/gitpair init
+```
+
 ## Commit message patterns
 
 You can use one of two styles of commit messages. The user names used must correspond to one of the aliases you listed in your `.gitpair` file (see above).
@@ -83,10 +108,31 @@ You can use one of two styles of commit messages. The user names used must corre
 Notes:
 - The normalised format message will use the `Initials` pattern and the first `alias` for each author.
 - When using the `Initials` flavor, the semicolon is optional.
+- When using the github styled initials, you can also specify users not in your team by tagging their github username. The git hook will ask if you want to add their info to your team.
+
+## Should I commit my .gitpair file into my repo?
+
+There are a few questions you need to ask yourself to answer this:
+
+ - Is my repository private?
+ - Should I be exposing email addresses in my repository (a more important question for public repositories)?
+ - Will everyone working on this repository be pairing with the same people?
+
+If you answered no to any of these questions, then you likely want to have .gitpair in your local .gitignore.
+
 
 ## Uninstall
+
+### Remove git hook
+
+```bash
+$(npm bin)/gitpair install -u
+```
+
+### Removing the package
 
 ```
 $ npm uninstall gitpair
 ```
-This removes the `post-commit` hook which was added during the install.
+
+This automatically removes the `post-commit` hook if it exists.
