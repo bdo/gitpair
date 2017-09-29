@@ -1,10 +1,11 @@
-const gitHook = require("./gitHook.js");
-const install = require("./install.js");
-const init = require("./init.js");
 const ArgParse = require("argparse");
 
-const packageJson = require("../package.json");
+const scHook = require("./subcommands/hook.js");
+const scInstall = require("./subcommands/install.js");
+const scInit = require("./subcommands/init.js");
 
+
+const packageJson = require("../package.json");
 const parser = new ArgParse.ArgumentParser({
   name: packageJson.name,
   version: packageJson.version,
@@ -14,17 +15,17 @@ const parser = new ArgParse.ArgumentParser({
 
 const subparsers = parser.addSubparsers({ dest: "command" })
 
-const wizard = subparsers.addParser("init", { dest: "init", description: "Create a local .gitpair file", addHelp: true })
+const init = subparsers.addParser("init", { dest: "init", description: "Create a local .gitpair file", addHelp: true })
 
-const installer = subparsers.addParser("install", { dest: "install", description: "Install script as a git hook in your .git/hooks directory.", addHelp: true })
-installer.addArgument(
+const install = subparsers.addParser("install", { dest: "install", description: "Install script as a git hook in your .git/hooks directory.", addHelp: true })
+install.addArgument(
   ["-u", "--uninstall"],
   {
     nargs: 0,
     help: "Remove the .git/hook/post-commit script."
   }
 );
-installer.addArgument(
+install.addArgument(
   ["-p", "--path"],
   {
     help: "Set the path of .gitpair. Defaults to the directory containing your package.json, or your home directory."
@@ -44,14 +45,14 @@ hook.addArgument(
 const args = parser.parseArgs();
 switch(args.command) {
   case "init":
-    init(args);
+    scInit(args);
     break;
 
   case "install":
-    install(args);
+    scInstall(args);
     break;
 
   case "hook":
-    gitHook(args);
+    scHook(args);
     break;
 }
