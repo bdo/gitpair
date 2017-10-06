@@ -1,23 +1,20 @@
-const runCmd = require("./runCmd.js")
+const runCmd = require('./runCmd.js')
 
-module.exports.readLastCommitMsg = (callback) => {
-  runCmd('git log -1 --pretty=format:%B', callback);
+module.exports.readLastCommitMsg = () => {
+  return runCmd('git log -1 --pretty=format:%B')
 }
 
-
 module.exports.amendLastCommitMsg = (message, author, committer) => {
-  runCmd([
+  return runCmd([
     `GIT_COMMITTER_NAME='${escapeQuotesForBash(committer.name)}'`,
     `GIT_COMMITTER_EMAIL='${escapeQuotesForBash(committer.email)}'`,
     'ALREADY_INSIDE_GITPAIR=1',
     'git commit --amend',
     `--message '${escapeQuotesForBash(message)}'`,
     `--author='${escapeQuotesForBash(author.names)} <${escapeQuotesForBash(author.email)}>'`
-  ].join(' '));
+  ].join(' '))
 }
 
-
-function escapeQuotesForBash(cmd) {
-  return cmd.replace(/'/g, "'\"'\"'");
+function escapeQuotesForBash (cmd) {
+  return cmd.replace(/'/g, "'\"'\"'")
 }
-

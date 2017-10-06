@@ -21,7 +21,8 @@
     "gitpair": "./src/index.js"
   },
   "scripts": {
-    "preuninstall": "$(npm bin)/gitpair install -u"
+    "preuninstall": "$(npm bin)/gitpair install -u",
+    "lint": "$(npm bin)/eslint src"
   },
   "devDependencies": {
     "chai": "^4.1.2",
@@ -38,6 +39,7 @@
     "enquirer": "^1.0.2",
     "promise": "^8.0.1",
     "prompt-confirm": "^1.2.0",
+    "prompt-list": "^2.2.0",
     "prompt-question": "^5.0.2",
     "request": "^2.83.0"
   }

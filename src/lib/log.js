@@ -1,11 +1,14 @@
-module.exports.log = function log() {
-  const [first, ...rest] = arguments;
-  console.log('[GITPAIR] ' + first, ...rest)
+module.exports.log = function log (message) {
+  const args = ['[GITPAIR] ' + message].concat(getTrailingArgs(arguments))
+  console.log.apply(console, args)
 }
 
+module.exports.error = function error (message) {
+  const args = ['[GITPAIR] ' + message].concat(getTrailingArgs(arguments))
+  console.error.apply(console, args)
+  throw new Error(args[0])
+}
 
-module.exports.error = function error() {
-  const [first, ...rest] = arguments;
-  console.error('[GITPAIR] ERROR: ' + first, ...rest);
-  process.exit(1);
+function getTrailingArgs (args) {
+  return Array.prototype.slice(args, 1)
 }

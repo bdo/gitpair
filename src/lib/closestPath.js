@@ -1,30 +1,27 @@
-const path = require('path');
-const fs = require('fs');
-
+const path = require('path')
+const fs = require('fs')
 
 module.exports = closestPath
 
-
 module.exports.DEFAULT_GITPAIR_PATH =
-  closestPath("package.json", ".") ||
-  closestPath(".gitpair", ".") ||
-  process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
-
+  closestPath('package.json', '.') ||
+  closestPath('.gitpair', '.') ||
+  process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME']
 
 function closestPath (containsThis, initialPath) {
-  let currentPath = null;
-  let nextPath = initialPath;
+  let currentPath = null
+  let nextPath = initialPath
 
   while (currentPath !== nextPath) {
-    currentPath = nextPath;
+    currentPath = path.resolve(nextPath)
 
-    const toCheck = path.resolve(resolvedPath, containsThis);
+    const toCheck = path.resolve(currentPath, containsThis)
     if (fs.existsSync(toCheck)) {
-      return currentPath;
+      return currentPath
     }
-    
-    nextPath = path.resolve(currentPath, "..");
+
+    nextPath = path.resolve(currentPath, '..')
   }
 
-  return null;
+  return null
 }
