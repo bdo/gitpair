@@ -16,19 +16,19 @@ module.exports = function hook (args) {
   return git.readLastCommitMsg()
     .then(function (commitMsg) {
       return parseCommitAndUpdateGitpair(path.resolve(configPath, '.gitpair'), commitMsg)
-        .then(function (team) {
-          return Promise.all([commitMsg, team])
-        })
     })
-    .then(function ([commitMsg, team]) {
-      // TODO
+    .then(function (options) {
+      return amendCommit(
+        options.team,
+        options.authors,
+        options.commitMsg
+      )
     })
 }
 
 function parseCommitAndUpdateGitpair (configPath, commitMsg) {
   return Promise.all([readJSON(configPath), getAuthorsFullMatch(commitMsg)])
     .then(function ([gitpair, authors]) {
-      console.log("parseCommitAndUpdateGitpair", authors)
       return findNonTeamAuthors(gitpair, authors)
         .then(function (newAliases) {
           return handleNewAliases(configPath, newAliases)
@@ -38,7 +38,11 @@ function parseCommitAndUpdateGitpair (configPath, commitMsg) {
         })
     })
     .then(function ([gitpair, authors]) {
-      //
+      return Promise.resolve({
+        team: gitpair.team,
+        authors: authors,
+        commitMsg: commitMsg
+      })
     })
 }
 
@@ -70,9 +74,12 @@ function findNonTeamAuthors (gitpair, aliases) {
     return teamAliases.concat(member.aliases)
   }, [])
 
-  return aliases.filter(function (alias) {
+  return Promise.resolve(aliases.filter(function (alias) {
     return teamAliases.indexOf(alias) === -1
-  })
+  }))
+}
+
+function updateCommit (authors, commitMsg) {
 }
 
 // function findOnlyTeamAuthors (gitpair, aliases) {
@@ -137,30 +144,37 @@ function findNonTeamAuthors (gitpair, aliases) {
 //   });
 // }
 
-function amendCommit (authors, authorsFullMatch, commitMsg) {
-  if (authors.length > 0) {
-    const commitMsgWithoutAuthors =
-      commitMsg
-        .slice(authorsFullMatch.length)
-
-    const message =
-      authors
-        .map(function (author) { return author.aliases[0].toUpperCase() })
-        .join('|') + ': ' + commitMsgWithoutAuthors
-
-    const authorAndCommitter = randomlySelectAuthorAndCommiter(authors)
-    const author = authorAndCommitter[0]
-    const committer = authorAndCommitter[1]
-    log.log('Setting author to %s, and committer to %s', author.name, committer.name)
-    git.amendLastCommitMsg(message, author, committer)
-
-    // TODO: Ask if they want to add any authors not currently in their team to .gitpair
-  } else {
+function amendCommit (team, authors, commitMsg) {
+  if (authors.length === 0) {
     log.log('No gitpair authors, leaving commit unchanged.')
+    return Promise.resolve()
   }
+
+  // const commitMsgWithoutAuthors =
+  //   commitMsg
+  //     .slice(authorsFullMatch.length)
+  //
+  // const message =
+  //   authors
+  //     .map(function (author) { return author.aliases[0].toUpperCase() })
+  //     .join('|') + ': ' + commitMsgWithoutAuthors
+  const message = commitMsg
+
+  const authorAndCommitter = randomlySelectAuthorAndCommiter(team, authors)
+  const author = authorAndCommitter.author
+  const committer = authorAndCommitter.committer
+  console.dir(author)
+  console.dir(committer)
+  log.log('Setting author to %s, and committer to %s', author.name, committer.name)
+
+  return git.amendLastCommitMsg(message, author, committer)
 }
 
-function randomlySelectAuthorAndCommiter (authors) {
+function randomlySelectAuthorAndCommiter (team, authors) {
+  // TODO: Match authors to team members
+  const members = team.filter(function (member) {
+    return member.aliases.indexOf()
+  })
   const randomizedAuthors = shuffle(authors)
 
   return {
@@ -171,14 +185,25 @@ function randomlySelectAuthorAndCommiter (authors) {
 
 function getAuthorsFullMatch (commitMsg) {
   const upperCaseMatch = /^([A-Z]{2,})(?:\|([A-Z]{2,}))*:? /.exec(commitMsg)
+
+  if (upperCaseMatch) {
+    return upperCaseMatch[0].split('|')
+  }
+
   const atSyntaxMatch = /^@(\w{3,})(?: @(\w{3,}))* /.exec(commitMsg)
 
-  console.log("Upper case ------------")
-  console.dir(upperCaseMatch)
-  console.log("At syntax ------------")
-  console.dir(atSyntaxMatch)
+  if (atSyntaxMatch) {
+    return atSyntaxMatch[0]
+      .split(' ')
+      .filter(function (atTag) {
+        return typeof atTag === 'string' && atTag.length >= 2
+      })
+      .map(function (atTag) {
+        return atTag.slice(1) // Remove @ symbol
+      })
+  }
 
-  return (upperCaseMatch || atSyntaxMatch || [''])[0]
+  return ''
 }
 
 function findTeamMemberByAlias (team, alias) {
