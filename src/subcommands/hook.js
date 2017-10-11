@@ -17,12 +17,8 @@ module.exports = function hook (args) {
     .then(function (commitMsg) {
       return parseCommitAndUpdateGitpair(path.resolve(configPath, '.gitpair'), commitMsg)
     })
-    .then(function (options) {
-      return amendCommit(
-        options.team,
-        options.authors,
-        options.commitMsg
-      )
+    .then(function ({ team, authors, commitMsg }) {
+      return amendCommit(team, authors, commitMsg)
     })
 }
 
@@ -79,82 +75,12 @@ function findNonTeamAuthors (gitpair, aliases) {
   }))
 }
 
-// function findOnlyTeamAuthors (gitpair, aliases) {
-//   const teamAliases = gitpair.team.reduce(function (teamAliases, member) {
-//     return teamAliases.concat(member.aliases)
-//   }, [])
-//
-//   return aliases.filter(function (alias) {
-//     return teamAliases.indexOf(alias) >= 0
-//   })
-// }
-
-//
-//   git.readLastCommitMsg(function (commitMsg) {
-//     const authorsFullMatch =
-//       getAuthorsFullMatch(commitMsg)
-//
-//     const authorTokens =
-//       authorsFullMatch
-//       .split(/[@|: ]/)
-//       .filter(isDefined);
-//
-//     const authors =
-//       authorTokens
-//       .reduce(function (memo, token) {
-//         if (token && memo.indexOf(token) === -1) {
-//           return memo.concat(token)
-//         }
-//         return memo
-//       }, [])
-//
-//     const authorsOutsideTeam =
-//       authors
-//       .filter(function (author) { return !authorInTeam(author, team) })
-//
-//     const authorsInsideTeam =
-//       authors
-//       .filter(function (author) { return authorInTeam(author, team) })
-//
-//
-//     // TODO: Ask to get their github information, fill in missing emails when necessary
-//     let initialPromise = Promise.resolve(authorsInsideTeam)
-//     if (authorsOutsideTeam.length > 0) {
-//       // Loop through each author, and get their information...
-//       initialPromise = authorsOutsideTeam.reduce((promise, authorTag) => {
-//         return promise.then((availableAuthors) => {
-//           const enquirer = new Enquirer()
-//           enquirer.use(require("prompt-confirm"))
-//           return enquirer.ask({
-//             type: "confirm",
-//             name: "addAuthor",
-//             message: `#{authorTag} isn't in your team, do you want to add them?`
-//           })
-//             .then((response) => {
-//             })
-//         });
-//
-//       }, initialPromise)
-//     } else {
-//
-//     }
-//   });
-// }
-
 function amendCommit (team, authors, commitMsg) {
   if (authors.length === 0) {
     log.log('No gitpair authors, leaving commit unchanged.')
     return Promise.resolve()
   }
 
-  // const commitMsgWithoutAuthors =
-  //   commitMsg
-  //     .slice(authorsFullMatch.length)
-  //
-  // const message =
-  //   authors
-  //     .map(function (author) { return author.aliases[0].toUpperCase() })
-  //     .join('|') + ': ' + commitMsgWithoutAuthors
   const message = commitMsg
 
   const authorAndCommitter = randomlySelectAuthorAndCommitter(team, authors)
@@ -205,32 +131,10 @@ function getAuthorsFullMatch (commitMsg) {
 }
 
 function findTeamMemberByAlias (team, alias) {
-  console.log('findTeamMembersByAlias', alias)
   return team.find(function (person) {
     console.log(' >', person.aliases.join(','), alias)
     return person.aliases.indexOf(alias) >= 0
   })
-}
-
-function getTeamMembers (configPath) {
-  const filename = '.gitpair'
-  const file = path.resolve(configPath, filename)
-
-  try {
-    const config = readJSON(file)
-    return config.team
-  } catch (err) {
-    if (err.code === 'ENOENT') {
-      log.error(`Could not find ${file}. Gitpair needs this file to work...`)
-      process.exit(0)
-    }
-
-    throw err
-  }
-}
-
-function isDefined (s) {
-  return typeof s !== 'undefined'
 }
 
 function shuffle (array) {
