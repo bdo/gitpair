@@ -35,16 +35,33 @@ module.exports.fromTag = function fromTag (path, tag) {
 function addToFile (path, teamMembers) {
   return new Promise(function (resolve, reject) {
     fs.readFile(path, 'utf8', function (err, contents) {
+      let currentContents = { team: [] }
+
       if (err) {
-        return reject(err)
+        console.log('Error reading file, maybe it doesn\'t exist yet.')
+      } else {
+        try {
+          currentContents = JSON.parse(contents)
+        } catch (error) {
+          console.log(contents)
+          console.log(error)
+        }
       }
 
-      const currentContents = JSON.parse(contents)
+      const team = teamMembers
+        .reduce(combineMembers, currentContents.team)
+        .map(normalizeMember)
+
       const newContents = {
-        team: currentContents.concat(teamMembers)
+        team: team
       }
 
-      fs.writeFile(path, JSON.stringify(newContents, null, 2), function (err) {
+      const jsonString = JSON.stringify(newContents, null, 2)
+
+      console.log('Updating .gitpair file to the following:')
+      console.log(jsonString)
+
+      fs.writeFile(path, jsonString, function (err) {
         if (err) {
           return reject(err)
         }
@@ -55,22 +72,65 @@ function addToFile (path, teamMembers) {
 }
 module.exports.addToFile = addToFile
 
+function combineMembers (currentTeam, newMember) {
+  const matchingIndex = findIndexOfMemberByEmail(currentTeam, newMember.email)
+  if (matchingIndex === -1) {
+    return currentTeam.concat(newMember)
+  } else {
+    return currentTeam.map(function (member, idx) {
+      if (idx === matchingIndex) {
+        return Object.assign(
+          {},
+          member,
+          {
+            name: newMember.name,
+            aliases: member.aliases.concat(newMember.aliases)
+          }
+        )
+      }
+      return member
+    })
+  }
+}
+
+function normalizeMember (member) {
+  return Object.assign(
+    {},
+    member,
+    {
+      aliases: member
+        .aliases
+        .filter(function (alias) {
+          return typeof alias === 'string' && alias.length >= 2
+        })
+        .reduce(uniqArrayReducer, [])
+    }
+  )
+}
+
+function findIndexOfMemberByEmail (members, email) {
+  return members.findIndex(function (member) {
+    return member.email === email
+  })
+}
+
+function uniqArrayReducer (uniqued, item) {
+  if (uniqued.indexOf(item) === -1) {
+    return uniqued.concat(item)
+  }
+  return uniqued
+}
+
 function fromGithub (enquirer, path, alias) {
-  console.log(`Fetching public user information from github for #{username}...`)
+  console.log(`Fetching public user information from github for ${alias}...`)
   return github.getUser(alias)
-    .then(function (githubUser) {
+    .then(function (gitpairUser) {
       console.log('...ok')
 
-      const promptEnquirer = new Enquirer()
-
       return fromPrompt(
-        promptEnquirer,
+        new Enquirer(),
         path,
-        {
-          name: githubUser.name,
-          email: githubUser.email,
-          aliases: [githubUser.login]
-        }
+        gitpairUser
       )
     })
     .catch(function () {
@@ -93,18 +153,18 @@ function fromPrompt (enquirer, path, defaults = {}) {
       message: `Enter a ${firstMissingKey}`
     })
       .then((responses) => {
+        const value = firstMissingKey === 'aliases'
+          ? [responses[firstMissingKey]]
+          : responses[firstMissingKey]
+
         return fromPrompt(
           enquirer,
           path,
-          {
-            name: defaults.name || responses.name,
-            email: defaults.email || responses.email,
-            aliases: defaults.aliases || responses.aliases
-          }
+          Object.assign({}, defaults, { [firstMissingKey]: value })
         )
       })
   } else {
-    return defaults
+    return Promise.resolve(defaults)
   }
 }
 module.exports.fromPrompt = fromPrompt

@@ -1,6 +1,7 @@
 const path = require('path')
 const fs = require('fs')
-const closestPath = require('./closestPath')
+
+const closestPath = require('../lib/closestPath')
 
 module.exports = function install (args) {
   const gitPath = closestPath('.git', '.')
@@ -40,6 +41,7 @@ function doInstall (hooksFile) {
 
   return readPostCommitTemplate(path.resolve(
     __dirname,
+    '..',
     '..',
     'hooks',
     'post-commit'

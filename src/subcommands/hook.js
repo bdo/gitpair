@@ -15,7 +15,7 @@ module.exports = function hook (args) {
 
   return git.readLastCommitMsg()
     .then(function (commitMsg) {
-      return parseCommitAndUpdateGitpair(configPath, commitMsg)
+      return parseCommitAndUpdateGitpair(path.resolve(configPath, '.gitpair'), commitMsg)
         .then(function (team) {
           return Promise.all([commitMsg, team])
         })
@@ -28,6 +28,7 @@ module.exports = function hook (args) {
 function parseCommitAndUpdateGitpair (configPath, commitMsg) {
   return Promise.all([readJSON(configPath), getAuthorsFullMatch(commitMsg)])
     .then(function ([gitpair, authors]) {
+      console.log("parseCommitAndUpdateGitpair", authors)
       return findNonTeamAuthors(gitpair, authors)
         .then(function (newAliases) {
           return handleNewAliases(configPath, newAliases)
@@ -171,6 +172,11 @@ function randomlySelectAuthorAndCommiter (authors) {
 function getAuthorsFullMatch (commitMsg) {
   const upperCaseMatch = /^([A-Z]{2,})(?:\|([A-Z]{2,}))*:? /.exec(commitMsg)
   const atSyntaxMatch = /^@(\w{3,})(?: @(\w{3,}))* /.exec(commitMsg)
+
+  console.log("Upper case ------------")
+  console.dir(upperCaseMatch)
+  console.log("At syntax ------------")
+  console.dir(atSyntaxMatch)
 
   return (upperCaseMatch || atSyntaxMatch || [''])[0]
 }

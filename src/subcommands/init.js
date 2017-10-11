@@ -1,10 +1,8 @@
 const Enquirer = require('enquirer')
-const fs = require('fs')
 const path = require('path')
 
-const closestPath = require('./closestPath.js')
-
-const addUserToConfig = require('./addUserToConfig.js')
+const closestPath = require('../lib/closestPath.js')
+const addUserToConfig = require('../lib/addUserToConfig.js')
 
 var enquirer = new Enquirer()
 enquirer.register('confirm', require('prompt-confirm'))
@@ -20,9 +18,9 @@ module.exports = function init (args) {
     .then(askForInformation)
     .then(function (response) {
       console.log('Adding %s/.gitpair with details you provided', response.path)
-      fs.writeFileSync(
+      return addUserToConfig.addToFile(
         path.resolve(response.path, '.gitpair'),
-        JSON.stringify({ team: [response.gitpair] }, null, 2)
+        response.members
       )
     })
 }
@@ -34,13 +32,11 @@ function askForInformation (response) {
     message: 'What is your alias (typically username on github or your initials)'
   })
     .then(function (response) {
-      return addUserToConfig.fromTab(response.path, response.yourAlias)
+      return addUserToConfig.fromTag(response.path, response.yourAlias)
     })
     .then(function (user) {
       return Object.assign({}, response, {
-        gitpair: {
-          team: [user]
-        }
+        members: [user]
       })
     })
 }

@@ -1,17 +1,18 @@
 require('./promisify.js')
+const process = require('process')
 
 const args = require('./parseArgs.js')()
 
-process(args)
+main(args)
   .then(function () {
-    process.exit(0)
+    process.exitCode = 0
   })
   .catch(function (err) {
     console.error(err)
-    process.exit(1)
+    process.exitCode = 1
   })
 
-function process (args) {
+function main (args) {
   switch (args.command) {
     case 'init':
       return require('./subcommands/init.js')(args)
