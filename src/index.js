@@ -14,8 +14,8 @@ main(args)
 
 function main (args) {
   switch (args.command) {
-    case 'init':
-      return require('./subcommands/init.js')(args)
+    case 'add':
+      return require('./subcommands/add.js')(args)
 
     case 'install':
       return require('./subcommands/install.js')(args)

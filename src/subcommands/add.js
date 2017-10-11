@@ -5,9 +5,8 @@ const closestPath = require('../lib/closestPath.js')
 const addUserToConfig = require('../lib/addUserToConfig.js')
 
 var enquirer = new Enquirer()
-enquirer.register('confirm', require('prompt-confirm'))
 
-module.exports = function init (args) {
+module.exports = function add (args) {
   return enquirer
     .ask({
       name: 'path',

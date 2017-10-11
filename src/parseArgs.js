@@ -21,9 +21,9 @@ module.exports = function parseArgs () {
 }
 
 function createInitSubcommand (subparsers) {
-  return subparsers.addParser('init', {
-    dest: 'init',
-    description: 'Create a local .gitpair file',
+  return subparsers.addParser('add', {
+    dest: 'add',
+    description: 'Create/update a .gitpair file',
     addHelp: true
   })
 }
