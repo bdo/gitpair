@@ -79,9 +79,6 @@ function findNonTeamAuthors (gitpair, aliases) {
   }))
 }
 
-function updateCommit (authors, commitMsg) {
-}
-
 // function findOnlyTeamAuthors (gitpair, aliases) {
 //   const teamAliases = gitpair.team.reduce(function (teamAliases, member) {
 //     return teamAliases.concat(member.aliases)
@@ -160,26 +157,27 @@ function amendCommit (team, authors, commitMsg) {
   //     .join('|') + ': ' + commitMsgWithoutAuthors
   const message = commitMsg
 
-  const authorAndCommitter = randomlySelectAuthorAndCommiter(team, authors)
+  const authorAndCommitter = randomlySelectAuthorAndCommitter(team, authors)
   const author = authorAndCommitter.author
   const committer = authorAndCommitter.committer
-  console.dir(author)
-  console.dir(committer)
-  log.log('Setting author to %s, and committer to %s', author.name, committer.name)
+  log.log(`Setting author to ${author.name}, and committer to ${committer.name}`)
 
   return git.amendLastCommitMsg(message, author, committer)
 }
 
-function randomlySelectAuthorAndCommiter (team, authors) {
-  // TODO: Match authors to team members
-  const members = team.filter(function (member) {
-    return member.aliases.indexOf()
-  })
-  const randomizedAuthors = shuffle(authors)
+function randomlySelectAuthorAndCommitter (team, authors) {
+  const members = authors.reduce(function (teamMembers, author) {
+    const teamMember = findTeamMemberByAlias(team, author)
+    if (teamMember) {
+      return teamMembers.concat(teamMember)
+    }
+    return teamMembers
+  }, [])
+  const randomizedAuthors = shuffle(members)
 
   return {
     author: randomizedAuthors[0],
-    commiter: randomizedAuthors[randomizedAuthors.length - 1]
+    committer: randomizedAuthors[randomizedAuthors.length - 1]
   }
 }
 
@@ -199,15 +197,19 @@ function getAuthorsFullMatch (commitMsg) {
         return typeof atTag === 'string' && atTag.length >= 2
       })
       .map(function (atTag) {
-        return atTag.slice(1) // Remove @ symbol
+        return atTag.slice(1)
       })
   }
 
-  return ''
+  return []
 }
 
 function findTeamMemberByAlias (team, alias) {
-  return team.find(person => person.aliases.includes(alias.toLowerCase()))
+  console.log('findTeamMembersByAlias', alias)
+  return team.find(function (person) {
+    console.log(' >', person.aliases.join(','), alias)
+    return person.aliases.indexOf(alias) >= 0
+  })
 }
 
 function getTeamMembers (configPath) {

@@ -4,14 +4,14 @@ module.exports.readLastCommitMsg = () => {
   return runCmd('git log -1 --pretty=format:%B')
 }
 
-module.exports.amendLastCommitMsg = (message, author, committer) => {
+module.exports.amendLastCommitMsg = function (message, author, committer) {
   return runCmd([
     `GIT_COMMITTER_NAME='${escapeQuotesForBash(committer.name)}'`,
     `GIT_COMMITTER_EMAIL='${escapeQuotesForBash(committer.email)}'`,
     'ALREADY_INSIDE_GITPAIR=1',
     'git commit --amend',
     `--message '${escapeQuotesForBash(message)}'`,
-    `--author='${escapeQuotesForBash(author.names)} <${escapeQuotesForBash(author.email)}>'`
+    `--author='${escapeQuotesForBash(author.name)} <${escapeQuotesForBash(author.email)}>'`
   ].join(' '))
 }
 
