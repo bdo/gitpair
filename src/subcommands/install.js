@@ -1,9 +1,9 @@
-const path = require('path')
-const fs = require('fs')
+import path from 'path'
+import fs from 'fs'
 
-const closestPath = require('../lib/closestPath')
+import closestPath from '../lib/closestPath.js'
 
-module.exports = function install (args) {
+export default function install (args) {
   const gitPath = closestPath('.git', '.')
 
   if (!gitPath) {
@@ -24,7 +24,7 @@ function pickProcess (args, hooksFile) {
 }
 
 function doUninstall (hooksFile) {
-  console.log('removing %s', hooksFile)
+  console.log(`removing ${hooksFile}`)
 
   return new Promise(function (resolve, reject) {
     fs.unlink(hooksFile, function (err) {
@@ -37,7 +37,7 @@ function doUninstall (hooksFile) {
 }
 
 function doInstall (hooksFile) {
-  console.log('installing %s', hooksFile)
+  console.log(`installing ${hooksFile}`)
 
   return readPostCommitTemplate(path.resolve(
     __dirname,

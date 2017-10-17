@@ -1,8 +1,8 @@
-const ArgParse = require('argparse')
+import ArgParse from 'argparse'
 
-const packageJson = require('../package.json')
+import packageJson from '../package.json'
 
-module.exports = function parseArgs () {
+export default function parseArgs () {
   const parser = new ArgParse.ArgumentParser({
     name: packageJson.name,
     version: packageJson.version,

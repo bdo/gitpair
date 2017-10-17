@@ -1,7 +1,10 @@
-require('./promisify.js')
-const process = require('process')
+import './promisify.js'
 
-const args = require('./parseArgs.js')()
+import process from 'process'
+
+import parseArgs from './parseArgs.js'
+
+const args = parseArgs()
 
 main(args)
   .then(function () {
@@ -15,12 +18,12 @@ main(args)
 function main (args) {
   switch (args.command) {
     case 'add':
-      return require('./subcommands/add.js')(args)
+      return require('./subcommands/add.js').default(args)
 
     case 'install':
-      return require('./subcommands/install.js')(args)
+      return require('./subcommands/install.js').default(args)
 
     case 'hook':
-      return require('./subcommands/hook.js')(args)
+      return require('./subcommands/hook.js').default(args)
   }
 }

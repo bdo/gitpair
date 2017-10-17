@@ -1,9 +1,9 @@
-const Enquirer = require('enquirer')
-const fs = require('fs')
+import Enquirer from 'enquirer'
+import fs from 'fs'
 
-const github = require('./gitHub.js')
+import github from './github.js'
 
-module.exports.fromTag = function fromTag (path, tag) {
+export function fromTag (path, tag) {
   console.log(`Importing ${tag} into team`)
   const enquirer = new Enquirer()
   enquirer.register('list', require('prompt-list'))
@@ -32,9 +32,9 @@ module.exports.fromTag = function fromTag (path, tag) {
     })
 }
 
-function addToFile (path, teamMembers) {
-  return new Promise(function (resolve, reject) {
-    fs.readFile(path, 'utf8', function (err, contents) {
+export function addToFile (path, teamMembers) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(path, 'utf8', (err, contents) => {
       let currentContents = { team: [] }
 
       if (err) {
@@ -50,7 +50,6 @@ function addToFile (path, teamMembers) {
 
       const team = teamMembers
         .reduce(combineMembers, currentContents.team)
-        .map(normalizeMember)
 
       const newContents = {
         team: team
@@ -61,7 +60,7 @@ function addToFile (path, teamMembers) {
       console.log('Updating .gitpair file to the following:')
       console.log(jsonString)
 
-      fs.writeFile(path, jsonString, function (err) {
+      fs.writeFile(path, jsonString, (err) => {
         if (err) {
           return reject(err)
         }
@@ -70,61 +69,31 @@ function addToFile (path, teamMembers) {
     })
   })
 }
-module.exports.addToFile = addToFile
 
 function combineMembers (currentTeam, newMember) {
   const matchingIndex = findIndexOfMemberByEmail(currentTeam, newMember.email)
   if (matchingIndex === -1) {
     return currentTeam.concat(newMember)
   } else {
-    return currentTeam.map(function (member, idx) {
+    return currentTeam.map((member, idx) => {
       if (idx === matchingIndex) {
-        return Object.assign(
-          {},
-          member,
-          {
-            name: newMember.name,
-            aliases: member.aliases.concat(newMember.aliases)
-          }
-        )
+        return { ...member, name: newMember.name, initials: member.initials, githubUsername: member.githubUsername }
       }
       return member
     })
   }
 }
 
-function normalizeMember (member) {
-  return Object.assign(
-    {},
-    member,
-    {
-      aliases: member
-        .aliases
-        .filter(function (alias) {
-          return typeof alias === 'string' && alias.length >= 2
-        })
-        .reduce(uniqArrayReducer, [])
-    }
-  )
-}
-
 function findIndexOfMemberByEmail (members, email) {
-  return members.findIndex(function (member) {
+  return members.findIndex((member) => {
     return member.email === email
   })
 }
 
-function uniqArrayReducer (uniqued, item) {
-  if (uniqued.indexOf(item) === -1) {
-    return uniqued.concat(item)
-  }
-  return uniqued
-}
-
-function fromGithub (enquirer, path, alias) {
-  console.log(`Fetching public user information from github for ${alias}...`)
-  return github.getUser(alias)
-    .then(function (gitpairUser) {
+export function fromGithub (enquirer, path, githubUsername) {
+  console.log(`Fetching public user information from github for ${githubUsername}...`)
+  return github.getUser(githubUsername)
+    .then((gitpairUser) => {
       console.log('...ok')
 
       return fromPrompt(
@@ -133,7 +102,7 @@ function fromGithub (enquirer, path, alias) {
         gitpairUser
       )
     })
-    .catch(function () {
+    .catch(() => {
       console.log('...err')
       console.error('Unable to get your github username, please fill out your teammates information')
       console.log()
@@ -142,29 +111,24 @@ function fromGithub (enquirer, path, alias) {
       return fromGithub(promptEnquirer, path)
     })
 }
-module.exports.fromGithub = fromGithub
 
-function fromPrompt (enquirer, path, defaults = {}) {
-  const REQUIRED_KEYS = ['name', 'email', 'aliases']
+export function fromPrompt (enquirer, path, defaults = {}) {
+  const REQUIRED_KEYS = ['name', 'email', 'initials', 'githubUsername']
   const firstMissingKey = REQUIRED_KEYS.find((key) => !defaults[key])
+
   if (firstMissingKey) {
     return enquirer.ask({
       name: firstMissingKey,
       message: `Enter a ${firstMissingKey}`
     })
       .then((responses) => {
-        const value = firstMissingKey === 'aliases'
-          ? [responses[firstMissingKey]]
-          : responses[firstMissingKey]
-
         return fromPrompt(
           enquirer,
           path,
-          Object.assign({}, defaults, { [firstMissingKey]: value })
+          { ...defaults, [firstMissingKey]: responses[firstMissingKey] }
         )
       })
   } else {
     return Promise.resolve(defaults)
   }
 }
-module.exports.fromPrompt = fromPrompt

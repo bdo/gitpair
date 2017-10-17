@@ -1,10 +1,10 @@
-const runCmd = require('./runCmd.js')
+import runCmd from './runCmd.js'
 
-module.exports.readLastCommitMsg = () => {
+export function readLastCommitMsg () {
   return runCmd('git log -1 --pretty=format:%B')
 }
 
-module.exports.amendLastCommitMsg = function (message, author, committer) {
+export function amendLastCommitMsg (message, author, committer) {
   return runCmd([
     `GIT_COMMITTER_NAME='${escapeQuotesForBash(committer.name)}'`,
     `GIT_COMMITTER_EMAIL='${escapeQuotesForBash(committer.email)}'`,

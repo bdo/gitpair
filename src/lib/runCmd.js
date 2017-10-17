@@ -1,10 +1,10 @@
-const exec = require('child_process').exec
+import { exec } from 'child_process'
 
-const log = require('./log.js')
+import log from './log.js'
 
-module.exports = (cmd) => {
-  return new Promise(function (resolve, reject) {
-    exec(cmd, function (err, stdout, stderr) {
+export default function runCmd (cmd) {
+  return new Promise((resolve, reject) => {
+    exec(cmd, (err, stdout, stderr) => {
       if (err) {
         if (stderr.length > 0) {
           console.error(stderr)

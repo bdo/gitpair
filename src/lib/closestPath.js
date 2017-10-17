@@ -1,14 +1,13 @@
-const path = require('path')
-const fs = require('fs')
+import path from 'path'
+import fs from 'fs'
+import process from 'process'
 
-module.exports = closestPath
-
-module.exports.DEFAULT_GITPAIR_PATH =
+export const DEFAULT_GITPAIR_PATH =
   closestPath('package.json', '.') ||
   closestPath('.gitpair', '.') ||
   process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME']
 
-function closestPath (containsThis, initialPath) {
+export default function closestPath (containsThis, initialPath) {
   let currentPath = null
   let nextPath = initialPath
 

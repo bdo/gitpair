@@ -1,5 +1,6 @@
 const path = require('path')
 const fs = require('fs')
+const process = require('process')
 
 const git = require('../lib/git.js')
 const log = require('../lib/log.js')
@@ -14,26 +15,26 @@ module.exports = function hook (args) {
   const configPath = args.path || closestPath.DEFAULT_GITPAIR_PATH
 
   return git.readLastCommitMsg()
-    .then(function (commitMsg) {
+    .then((commitMsg) => {
       return parseCommitAndUpdateGitpair(path.resolve(configPath, '.gitpair'), commitMsg)
     })
-    .then(function ({ team, authors, commitMsg }) {
+    .then(({ team, authors, commitMsg }) => {
       return amendCommit(team, authors, commitMsg)
     })
 }
 
 function parseCommitAndUpdateGitpair (configPath, commitMsg) {
   return Promise.all([readJSON(configPath), getAuthorsFullMatch(commitMsg)])
-    .then(function ([gitpair, authors]) {
+    .then(([gitpair, authors]) => {
       return findNonTeamAuthors(gitpair, authors)
-        .then(function (newAliases) {
+        .then((newAliases) => {
           return handleNewAliases(configPath, newAliases)
         })
-        .then(function () {
+        .then(() => {
           return Promise.all([readJSON(configPath), getAuthorsFullMatch(commitMsg)])
         })
     })
-    .then(function ([gitpair, authors]) {
+    .then(([gitpair, authors]) => {
       return Promise.resolve({
         team: gitpair.team,
         authors: authors,
@@ -48,29 +49,29 @@ function readJSON (file) {
 }
 
 function handleNewAliases (configPath, newAliases) {
-  // TODO: Loop through each alias and prompt for a new author to be added
-  // If yes, add that new author to an array
-  // If no, do not append initial array
-  return newAliases.reduce(function (promise, alias) {
-    return promise.then(function (newAuthors) {
-      // TODO: Ask to add new alias
+  if (!process.stdout.isTTY) {
+    return Promise.resolve()
+  }
+
+  return newAliases.reduce((promise, alias) => {
+    return promise.then((newAuthors) => {
       return addUserToConfig.fromTag(configPath, alias)
-        .then(function (newAuthor) {
+        .then((newAuthor) => {
           return newAuthors.concat(newAuthor)
         })
     })
   }, Promise.resolve([]))
-    .then(function (newAuthors) {
+    .then((newAuthors) => {
       return addUserToConfig.addToFile(configPath, newAuthors)
     })
 }
 
 function findNonTeamAuthors (gitpair, aliases) {
-  const teamAliases = gitpair.team.reduce(function (teamAliases, member) {
+  const teamAliases = gitpair.team.reduce((teamAliases, member) => {
     return teamAliases.concat(member.aliases)
   }, [])
 
-  return Promise.resolve(aliases.filter(function (alias) {
+  return Promise.resolve(aliases.filter((alias) => {
     return teamAliases.indexOf(alias) === -1
   }))
 }
@@ -92,8 +93,8 @@ function amendCommit (team, authors, commitMsg) {
 }
 
 function randomlySelectAuthorAndCommitter (team, authors) {
-  const members = authors.reduce(function (teamMembers, author) {
-    const teamMember = findTeamMemberByAlias(team, author)
+  const members = authors.reduce((teamMembers, author) => {
+    const teamMember = findTeamMemberByCommitTag(team, author)
     if (teamMember) {
       return teamMembers.concat(teamMember)
     }
@@ -119,22 +120,17 @@ function getAuthorsFullMatch (commitMsg) {
   if (atSyntaxMatch) {
     return atSyntaxMatch[0]
       .split(' ')
-      .filter(function (atTag) {
-        return typeof atTag === 'string' && atTag.length >= 2
-      })
-      .map(function (atTag) {
-        return atTag.slice(1)
-      })
+      .filter((atTag) => typeof atTag === 'string' && atTag.length >= 2)
+      .map((atTag) => atTag.slice(1))
   }
 
   return []
 }
 
-function findTeamMemberByAlias (team, alias) {
-  return team.find(function (person) {
-    console.log(' >', person.aliases.join(','), alias)
-    return person.aliases.indexOf(alias) >= 0
-  })
+function findTeamMemberByCommitTag (team, tag) {
+  return team.find((person) => (
+    person.githubUsername === tag || person.initials === tag
+  ))
 }
 
 function shuffle (array) {
