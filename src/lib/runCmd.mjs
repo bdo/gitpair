@@ -1,10 +1,10 @@
-import { exec } from 'child_process'
+import * as childProcess from 'child_process'
 
-import log from './log.js'
+import * as log from './log.mjs'
 
 export default function runCmd (cmd) {
   return new Promise((resolve, reject) => {
-    exec(cmd, (err, stdout, stderr) => {
+    childProcess.exec(cmd, (err, stdout, stderr) => {
       if (err) {
         if (stderr.length > 0) {
           console.error(stderr)

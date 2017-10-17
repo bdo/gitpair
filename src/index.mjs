@@ -1,8 +1,11 @@
-import './promisify.js'
+import './promisify.mjs'
 
 import process from 'process'
 
-import parseArgs from './parseArgs.js'
+import parseArgs from './parseArgs.mjs'
+import add from './subcommands/add.mjs'
+import install from './subcommands/install.mjs'
+import hook from './subcommands/hook.mjs'
 
 const args = parseArgs()
 
@@ -18,12 +21,12 @@ main(args)
 function main (args) {
   switch (args.command) {
     case 'add':
-      return require('./subcommands/add.js').default(args)
+      return add(args)
 
     case 'install':
-      return require('./subcommands/install.js').default(args)
+      return install(args)
 
     case 'hook':
-      return require('./subcommands/hook.js').default(args)
+      return hook(args)
   }
 }

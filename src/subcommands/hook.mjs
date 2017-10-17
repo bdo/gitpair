@@ -1,13 +1,13 @@
-const path = require('path')
-const fs = require('fs')
-const process = require('process')
+import path from 'path'
+import fs from 'fs'
+import process from 'process'
 
-const git = require('../lib/git.js')
-const log = require('../lib/log.js')
-const closestPath = require('../lib/closestPath.js')
-const addUserToConfig = require('../lib/addUserToConfig.js')
+import git from '../lib/git.mjs'
+import * as log from '../lib/git.mjs'
+import closestPath from '../lib/closestPath.mjs'
+import addUserToConfig from '../lib/addUserToConfig.mjs'
 
-module.exports = function hook (args) {
+export default function hook (args) {
   if (process.env.ALREADY_INSIDE_GITPAIR) {
     return Promise.resolve()
   }

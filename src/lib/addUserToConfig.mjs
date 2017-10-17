@@ -1,7 +1,7 @@
 import Enquirer from 'enquirer'
 import fs from 'fs'
 
-import github from './github.js'
+import github from './github.mjs'
 
 export function fromTag (path, tag) {
   console.log(`Importing ${tag} into team`)
