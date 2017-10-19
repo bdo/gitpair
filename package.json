@@ -18,12 +18,12 @@
   },
   "main": "./src/index.js",
   "bin": {
-    "gitpair": "./gitpair.js"
+    "gitpair": "./bin/gitpair",
+    "gitpair.cmd": "./bin/gitpair.cmd"
   },
   "scripts": {
     "preuninstall": "$(npm bin)/gitpair install -u",
-    "lint": "$(npm bin)/eslint src",
-    "build": "$(npm bin)/webpack --config config/webpack.config.js"
+    "lint": "$(npm bin)/eslint src"
   },
   "devDependencies": {
     "argparse": "^1.0.9",
@@ -47,7 +47,6 @@
     "prompt-confirm": "^1.2.0",
     "prompt-list": "^2.2.0",
     "prompt-question": "^5.0.2",
-    "request": "^2.83.0",
-    "webpack": "^3.8.1"
+    "request": "^2.83.0"
   }
 }
