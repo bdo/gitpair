@@ -19,7 +19,6 @@
   "main": "./src/index.js",
   "bin": {
     "gitpair": "./bin/gitpair",
-    "gitpair.cmd": "./bin/gitpair.cmd"
   },
   "scripts": {
     "preuninstall": "$(npm bin)/gitpair install -u",
