@@ -1,8 +1,8 @@
 const Enquirer = require('enquirer')
 const path = require('path')
 
-const closestPath = require('../lib/closestPath.mjs')
-const addUserToConfig = require('../lib/addUserToConfig.mjs')
+const closestPath = require('../lib/closestPath.js')
+const addUserToConfig = require('../lib/addUserToConfig.js')
 
 export default function add (args) {
   const enquirer = new Enquirer()

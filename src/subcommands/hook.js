@@ -2,10 +2,10 @@ import path from 'path'
 import fs from 'fs'
 import process from 'process'
 
-import git from '../lib/git.mjs'
-import * as log from '../lib/git.mjs'
-import closestPath from '../lib/closestPath.mjs'
-import addUserToConfig from '../lib/addUserToConfig.mjs'
+import git from '../lib/git.js'
+import * as log from '../lib/git.js'
+import closestPath from '../lib/closestPath.js'
+import addUserToConfig from '../lib/addUserToConfig.js'
 
 export default function hook (args) {
   if (process.env.ALREADY_INSIDE_GITPAIR) {

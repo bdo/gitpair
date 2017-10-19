@@ -1,11 +1,11 @@
-import './promisify.mjs'
+import './promisify.js'
 
 import process from 'process'
 
-import parseArgs from './parseArgs.mjs'
-import add from './subcommands/add.mjs'
-import install from './subcommands/install.mjs'
-import hook from './subcommands/hook.mjs'
+import parseArgs from './parseArgs.js'
+import add from './subcommands/add.js'
+import install from './subcommands/install.js'
+import hook from './subcommands/hook.js'
 
 const args = parseArgs()
 

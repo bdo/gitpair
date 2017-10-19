@@ -1,7 +1,7 @@
 import path from 'path'
 import fs from 'fs'
 
-import closestPath from '../lib/closestPath.mjs'
+import closestPath from '../lib/closestPath.js'
 
 export default function install (args) {
   const gitPath = closestPath('.git', '.')

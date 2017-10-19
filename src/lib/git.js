@@ -1,4 +1,4 @@
-import runCmd from './runCmd.mjs'
+import runCmd from './runCmd.js'
 
 export function readLastCommitMsg () {
   return runCmd('git log -1 --pretty=format:%B')
