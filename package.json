@@ -18,14 +18,15 @@
   },
   "main": "./src/index.js",
   "bin": {
-    "gitpair": "./bin/gitpair",
+    "gitpair": "./bin/gitpair"
   },
   "scripts": {
     "preuninstall": "$(npm bin)/gitpair install -u",
     "lint": "$(npm bin)/eslint src"
   },
-  "devDependencies": {
+  "dependencies": {
     "argparse": "^1.0.9",
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-es2015-arrow-functions": "^6.22.0",
