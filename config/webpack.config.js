@@ -25,6 +25,7 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.IgnorePlugin(/\.(css|less|scss|sass)$/)
+    new webpack.IgnorePlugin(/\.(css|less|scss|sass)$/),
+    new webpack.BannerPlugin("Version " + require("../package.json").version)
   ]
 };
