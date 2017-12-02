@@ -1,1 +1,3 @@
-#!/usr/bin/env node
+#!/usr/bin/which sh
+
+$(npm bin)/gitpair hook -p .

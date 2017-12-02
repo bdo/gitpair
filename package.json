@@ -1,6 +1,6 @@
 {
   "name": "gitpair",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "author": "Benoit d'Oncieu <bdoncieu@gmail.com>",
   "description": "Allow you to commit with more than one person, e.g. Pair programming or Mob programming.",
   "homepage": "https://github.com/bdo/gitpair.git",
@@ -16,9 +16,37 @@
   "bugs": {
     "url": "https://github.com/bdo/gitpair.git/issues"
   },
-  "scripts": {
-    "postinstall": "node scripts/install.js",
-    "preuninstall": "node scripts/install.js --uninstall"
+  "main": "./src/index.js",
+  "bin": {
+    "gitpair": "./bin/gitpair"
   },
-  "main": "lib/index.js"
+  "scripts": {
+    "preuninstall": "$(npm bin)/gitpair install -u",
+    "lint": "$(npm bin)/eslint src"
+  },
+  "dependencies": {
+    "argparse": "^1.0.9",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-es2015-arrow-functions": "^6.22.0",
+    "babel-plugin-transform-es2015-destructuring": "^6.23.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
+    "chai": "^4.1.2",
+    "enquirer": "^1.0.2",
+    "eslint": "^4.8.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.2.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "mocha": "^3.5.3",
+    "promise": "^8.0.1",
+    "prompt-confirm": "^1.2.0",
+    "prompt-list": "^2.2.0",
+    "prompt-question": "^5.0.2",
+    "request": "^2.83.0"
+  }
 }
