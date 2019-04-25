@@ -3,136 +3,145 @@
     gitpair
 </h1>
 
-When pairing or doing mob programming on github projects, git does not allow us to commit with all the names of people who contributed. 
-gitpair allows you to setup your team members and commit as normal. It then changes your commit based on the list of people referenced in the commit message.
+When pair programming or mob programming on git projects, there is a convention that allows us to document our co-authors in the commit message.
+However, adding the co-authorship information on every single commit is painful.
 
-Each author will randomly be credited with commiter or authorship, so that we can each be credited in our github contributions view !
+Gitpair allows you to setup your team members and commit as normal. It then amends your commit to add your co-authors.
+
+Each author will randomly be credited either as the main author or one of the co-authors, so that we can each be credited in our github contributions view!
 
 ### Before gitpair :sob:
+
 ![before](https://github.com/bdo/gitpair/raw/master/docs/before-gitpair.png)
 
 ### After gitpair :heart_eyes:
+
 ![after](https://github.com/bdo/gitpair/raw/master/docs/after-gitpair.png)
 
-gitpair does not require you to change the way you commit. Simplify use the `git commit` command or your favorite tool! 
+gitpair does not require you to change the way you commit. Simplify use the `git commit` command or your favorite tool!
 
-### Example:
-The following two commits
-```
-$ commit -am "JBH|BDO|JON Added README file"
-```
-```
-$ commit -am "@jordan @benoit @jonathan Added README file"
-```
-are equivalent and will result in the following commit:
-```
-commit 5aac6c15b7ea2b8ed6b8daaba01539931b9d9309
-Author:     Jordan Bartholomew-Harrison, Benoit d'Oncieu and Jon McClennon <bdoncieu@gmail.com>
-AuthorDate: Thu Oct 27 22:09:34 2016 +0200
-Commit:     Jon McClennon <Jon.McClennon@gmail.com>
-CommitDate: Thu Oct 27 22:09:34 2016 +0200
+## Setup
 
-    BDO|JM: Added README file
-```
-
-The _author's_ name contains the list of all author names while the _author_ and _committer_ emails will be *randomly* choosen amongst the list of committers. The commit message is normalised as a pipe separated list of  initials followed by a dash. 
-
-## Installation
-
-### Pre-requisites
-
-A recent version of `node` and `npm`.
-
-### Install
+### First install gitpair
 
 ```
-$ npm install --save gitpair
+$ npm install -g gitpair
 ```
 
-#### With [husky](https://github.com/typicode/husky)
+### Add authors you'd like to pair with regularly
 
-Update your package.json to run the hook script:
+Add all your co-authors in a .gitpair/authors.json file higher up in directory tree or in your user's home folder:
 
 ```json
-{
-  ...
-  "scripts": {
-    "postcommit": "$(npm bin)/gitpair hook"
+[
+  {
+    "name": "Peter Yarrow",
+    "email": "peter@ifihadahamm.er",
+    "aliases": ["peter"]
+  },
+  {
+    "name": "Paul Stookey",
+    "email": "paul@tellitonthemonta.in",
+    "aliases": ["paul"]
+  },
+  {
+    "name": "Mary Travers",
+    "email": "mary@lemontr.ee",
+    "aliases": ["mary"]
+  }
+]
+```
+
+### Install husky
+
+```
+$ npm install --save-dev gitpair husky
+```
+
+Then configure husky to run `gitpair amend` on every commit, add the following to your `package.json` file:
+
+```json
+"husky": {
+  "hooks": {
+    "post-commit": "gitpair amend"
   }
 }
 ```
 
-#### Manually adding the hook
+Now, you commits will be automatically patched with the co-authoring information!
+
+### Tell gitpair you're pairing
+
+Say you're doing some mob programming with Peter, Paul and Mary:
 
 ```bash
-$(npm bin)/gitpair install
+gitpair with peter paul mary
 ```
 
-The installation adds a `post-commit` hook at the root of your project in the `.git/hooks` directory.
+Then commit your work
 
-
-### Configure
-
-Create a `.gitpair` file in your project or home folder:
-
-```json
-{
-  "team": [
-    { "name": "Benoit d'Oncieu",             
-      "aliases": ["bdo", "benoit"],
-      "email": "bdoncieu@gmail.com" },
-    { "name": "Jon McClennon",
-      "aliases": ["jm", "jon", "jonathan", "jonathanmcclennon"],   
-      "email": "Jon.McClennon@gmail.com" },
-    { "name": "Jordan Bartholomew-Harrison", 
-      "aliases": ["jbh", "jordan", "jordanbharrison"], 
-      "email": "jordan.bh@outlook.com" }
-  ]
-}
+```
+$ commit -am "Too much of nothing"
 ```
 
-In a project, you can get this file started by running:
+This will result in the following commit:
+
+```
+Author:     Mary Travers <mary@lemontr.ee>
+
+    Too much of nothing
+
+    Co-authored-by: Paul Stookey <paul@tellitonthemonta.in>
+    Co-authored-by: Benoit d'Oncieu <bdoncieu@gmail.com>
+    Co-authored-by: Peter Yarrow <peter@ifihadahamm.er>
+```
+
+Every commit will randomly switch author and co-authors.
+
+## Other commands
+
+### know who you're pairing with
 
 ```bash
-$(npm bin)/gitpair init
+gitpair info
 ```
 
-## Commit message patterns
-
-You can use one of two styles of commit messages. The user names used must correspond to one of the aliases you listed in your `.gitpair` file (see above).
-
-| Github styled | Initials |
-| --- | --- |
-| @bdo @jon Added package.json | BDO\|JON: Added package.json |
-
-Notes:
-- The normalised format message will use the `Initials` pattern and the first `alias` for each author.
-- When using the `Initials` flavor, the semicolon is optional.
-- When using the github styled initials, you can also specify users not in your team by tagging their github username. The git hook will ask if you want to add their info to your team.
-
-## Should I commit my .gitpair file into my repo?
-
-There are a few questions you need to ask yourself to answer this:
-
- - Is my repository private?
- - Should I be exposing email addresses in my repository (a more important question for public repositories)?
- - Will everyone working on this repository be pairing with the same people?
-
-If you answered no to any of these questions, then you likely want to have .gitpair in your local .gitignore.
-
-
-## Uninstall
-
-### Remove git hook
+### stop pairing
 
 ```bash
-$(npm bin)/gitpair install -u
+gitpair off
 ```
 
-### Removing the package
+### resume pairing
 
-```
-$ npm uninstall gitpair
+```bash
+gitpair on
 ```
 
-This automatically removes the `post-commit` hook if it exists.
+### print the co-authored-by trailers
+
+```bash
+gitpair trailers
+```
+
+### manually amend the last commit
+
+```bash
+gitpair amend
+```
+
+## You don't want to install gitpair globally
+
+If like me, you don't like to install packages globally, follow these simple instructions.
+
+```bash
+npm install --save-dev gitpair
+```
+
+Then add the following alias to your profile script (e.g. ~/.bashrc or ~/.zshrc):
+
+```bash
+alias gitpair='$(npm bin)/gitpair'
+```
+
+And then you can run gitpair by just using `gitpair`.

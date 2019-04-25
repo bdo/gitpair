@@ -1,3 +1,0 @@
-#!/usr/bin/which sh
-
-$(npm bin)/gitpair hook -p .
