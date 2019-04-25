@@ -1,32 +1,14 @@
-import './promisify.js'
+import { bold, red } from 'chalk'
+import * as commands from './commands'
 
-import process from 'process'
+const [, , command, ...args] = process.argv
 
-import parseArgs from './parseArgs.js'
-import add from './subcommands/add.js'
-import install from './subcommands/install.js'
-import hook from './subcommands/hook.js'
-
-const args = parseArgs()
-
-main(args)
-  .then(function () {
-    process.exitCode = 0
-  })
-  .catch(function (err) {
-    console.error(err)
-    process.exitCode = 1
-  })
-
-function main (args) {
-  switch (args.command) {
-    case 'add':
-      return add(args)
-
-    case 'install':
-      return install(args)
-
-    case 'hook':
-      return hook(args)
+if (!Object.keys(commands).includes(command)) {
+  if (command) {
+    console.error(red(`Gitpair doesn't know any ${bold(command)} command!`))
   }
+  commands.help()
+  process.exit(1)
 }
+
+commands[command](...args)

@@ -1,6 +1,9 @@
 {
   "name": "gitpair",
-  "version": "0.1.0",
+  "version": "1.0.0-beta.9",
+  "engines": {
+    "node": ">=8"
+  },
   "author": "Benoit d'Oncieu <bdoncieu@gmail.com>",
   "description": "Allow you to commit with more than one person, e.g. Pair programming or Mob programming.",
   "homepage": "https://github.com/bdo/gitpair.git",
@@ -18,32 +21,55 @@
   },
   "main": "./src/index.js",
   "bin": {
-    "gitpair": "./bin/gitpair"
+    "gitpair": "./bin/gitpair.js"
   },
   "scripts": {
-    "preuninstall": "$(npm bin)/gitpair install -u",
-    "lint": "$(npm bin)/eslint src"
+    "prepublishOnly": "npm run build",
+    "build": "webpack -p",
+    "watch": "npm run build -- --watch",
+    "lint": "eslint .",
+    "test": "jest"
   },
-  "dependencies": {
-    "@babel/cli": "^7.0.0-beta.32",
-    "@babel/core": "^7.0.0-beta.32",
-    "@babel/node": "^7.0.0-beta.32",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.32",
-    "@babel/preset-env": "^7.0.0-beta.32",
-    "argparse": "^1.0.9",
-    "chai": "^4.1.2",
-    "enquirer": "^1.0.2",
-    "eslint": "^4.8.0",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-node": "^5.2.0",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1",
-    "mocha": "^3.5.3",
-    "promise": "^8.0.1",
-    "prompt-confirm": "^1.2.0",
-    "prompt-list": "^2.2.0",
-    "prompt-question": "^5.0.2",
-    "request": "^2.83.0"
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged && lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "jest": {
+    "setupFiles": [
+      "./src/testSetup"
+    ]
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/node": "^7.2.2",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.4.3",
+    "@babel/plugin-proposal-optional-chaining": "^7.2.0",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/register": "^7.4.0",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.5",
+    "babel-plugin-source-map-support": "^2.0.1",
+    "chalk": "^2.4.2",
+    "clipboardy": "^2.0.0",
+    "core-js": "^3.0.1",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "husky": "^1.3.1",
+    "jest": "^24.7.1",
+    "lint-staged": "^8.1.5",
+    "lodash": "^4.17.11",
+    "prettier": "^1.17.0",
+    "pretty-quick": "^1.10.0",
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.1"
   }
 }
