@@ -8,7 +8,7 @@ if (!Object.keys(commands).includes(command)) {
     console.error(red(`Gitpair doesn't know any ${bold(command)} command!`))
   }
   commands.help()
-  process.exit(1)
+  process.exit(command ? 1 : 0)
 }
 
 commands[command](...args)
