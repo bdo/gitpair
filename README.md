@@ -55,7 +55,7 @@ Add all your co-authors in a .gitpair/authors.json file higher up in directory t
 ### Install husky
 
 ```
-$ npm install --save-dev gitpair husky
+$ npm install --save-dev husky
 ```
 
 Then configure husky to run `gitpair amend` on every commit, add the following to your `package.json` file:
