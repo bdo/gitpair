@@ -1,6 +1,5 @@
 import { bold } from 'chalk'
 import pairingConfig from '../config/pairing'
-import shuffle from 'lodash/shuffle'
 import clipboardy from 'clipboardy'
 import coAuthoringTrailers from '../utils/co-authoring-trailers'
 
@@ -16,7 +15,7 @@ export default () => {
     return
   }
 
-  const trailers = coAuthoringTrailers(shuffle(coAuthors))
+  const trailers = coAuthoringTrailers(coAuthors)
   console.log(trailers)
   clipboardy.writeSync(trailers)
   console.log(bold(`👥 Trailer${coAuthors.length > 1 ? 's' : ''} copied to your clipboard!`))

@@ -1,5 +1,4 @@
 import { bold } from 'chalk'
-import shuffle from 'lodash/shuffle'
 import pairingConfig from '../config/pairing'
 import run from '../utils/run'
 import formatEmailAddress from '../utils/format-email-address'
@@ -27,15 +26,13 @@ export default () => {
     email: run('git config --get user.email'),
   }
 
-  const authors = shuffle([...pairingConfig.coAuthors, me])
-  const [firstAuthor, ...coAuthors] = authors
+  const { coAuthors } = pairingConfig
   const trailers = coAuthoringTrailers(coAuthors)
   const rawCommitMessage = stripCoAuthorship(run('git log -1 --pretty=%B'))
-  const author = formatEmailAddress(firstAuthor)
-  const command = `GITPAIR_RUNNING=1 git commit --amend --author "${author}" -m"${rawCommitMessage}\n\n${trailers}"`
+  const author = formatEmailAddress(me)
+  const command = `GITPAIR_RUNNING=1 git commit --amend -m"${rawCommitMessage}\n\n${trailers}"`
 
   log(bold('Rewriting last commit with the following info:'))
-  log(`Author: ${formatEmailAddress(firstAuthor)}`)
   log(trailers)
   run(command)
   log(bold('👥 Last commit was rewritten! 😎'))
