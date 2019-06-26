@@ -87,16 +87,15 @@ $ commit -am "Too much of nothing"
 This will result in the following commit:
 
 ```
-Author:     Mary Travers <mary@lemontr.ee>
+Author:     Benoit d'Oncieu <bdoncieu@gmail.com>
 
     Too much of nothing
 
-    Co-authored-by: Paul Stookey <paul@tellitonthemonta.in>
-    Co-authored-by: Benoit d'Oncieu <bdoncieu@gmail.com>
     Co-authored-by: Peter Yarrow <peter@ifihadahamm.er>
+    Co-authored-by: Paul Stookey <paul@tellitonthemonta.in>
+    Co-authored-by: Mary Travers <mary@lemontr.ee>
 ```
 
-Every commit will randomly switch author and co-authors.
 
 ## Other commands
 
