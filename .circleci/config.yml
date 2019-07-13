@@ -9,7 +9,7 @@ aliases:
   - &restore_cache
     restore_cache:
       keys:
-        - v1-dependencies-{{ checksum "package-lock.json" }}
+        - yarn-packages-{{ checksum "yarn.lock" }}
 
 jobs:
   dependencies:
@@ -17,24 +17,24 @@ jobs:
     steps:
       - checkout
       - *restore_cache
-      - run: npm ci
-      - run: npm audit
+      - run: yarn install --frozen-lockfile
+      - run: yarn audit
       - save_cache:
+          key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package-lock.json" }}
+            - ~/.cache/yarn
   unit_tests:
     <<: *defaults
     steps:
       - checkout
       - *restore_cache
-      - run: npm run test
+      - run: yarn test
   lint:
     <<: *defaults
     steps:
       - checkout
       - *restore_cache
-      - run: npm run lint
+      - run: yarn lint
 
 workflows:
   version: 2
