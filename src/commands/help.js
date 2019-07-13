@@ -56,6 +56,11 @@ const HELP_TEXT = {
 
   See also: ${bold('`git pair amend`')}
   `,
+  version: `
+  Usage: gitpair version
+
+  Prints the gitpair version.
+  `,
   help: `
   Usage: gitpair help <command>
 
@@ -74,6 +79,7 @@ const HELP_TEXT = {
     - on
     - trailers
     - help
+    - version
 
   Run ${bold('`gitpair help COMMAND`')} for more information on specific commands.
   Visit ${bold('https://github.com/bdo/gitpair')} to learn more about gitpair.
