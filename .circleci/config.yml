@@ -18,6 +18,7 @@ jobs:
       - checkout
       - *restore_cache
       - run: npm ci
+      - run: npm audit
       - save_cache:
           paths:
             - node_modules
