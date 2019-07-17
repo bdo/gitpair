@@ -23,6 +23,7 @@ jobs:
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
+            - node_modules
   unit_tests:
     <<: *defaults
     steps:
