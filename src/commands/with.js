@@ -12,9 +12,9 @@ export default (...patterns) => {
   }
   fs.writeFileSync(pairingFile, JSON.stringify(newPairingConfig, null, 2))
   if (coAuthors.length === 0) {
-    console.log('👤 Now not pairing with anyone')
+    console.info('👤 Now not pairing with anyone')
   } else {
     const names = coAuthors.map(({ name }) => name)
-    console.log(`👥 Now pairing with ${niceJoin(names)}`)
+    console.info(`👥 Now pairing with ${niceJoin(names)}`)
   }
 }

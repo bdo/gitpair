@@ -8,5 +8,5 @@ export default () => {
     enabled: false,
   }
   fs.writeFileSync(pairingFile, JSON.stringify(newPairingConfig, null, 2))
-  console.log('👤 Pairing is now off!')
+  console.info('👤 Pairing is now off!')
 }

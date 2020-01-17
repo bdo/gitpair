@@ -1,7 +1,7 @@
 import path from 'path'
 import fs from 'fs'
 import { homedir } from 'os'
-import { bold, red } from 'chalk'
+import { red } from 'chalk'
 import closestPath from '../utils/closest-path'
 import { GITPAIR_DIR, GITPAIR_AUTHORS_FILE } from './paths'
 

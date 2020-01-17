@@ -10,5 +10,5 @@ export default () => {
   }
   fs.writeFileSync(pairingFile, JSON.stringify(newPairingConfig, null, 2))
   const names = pairingConfig.coAuthors.map(({ name }) => name)
-  console.log(`👥 Now pairing with ${niceJoin(names)}`)
+  console.info(`👥 Now pairing with ${niceJoin(names)}`)
 }

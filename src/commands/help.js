@@ -1,4 +1,4 @@
-import { bold, red, dim, reset } from 'chalk'
+import { bold, red, dim } from 'chalk'
 
 const HELP_TEXT = {
   amend: `
@@ -100,4 +100,4 @@ const getHelp = command => {
     `
 }
 
-export default command => console.log(getHelp(command))
+export default command => console.info(getHelp(command))
