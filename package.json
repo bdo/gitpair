@@ -29,7 +29,8 @@
     "build": "webpack -p",
     "watch": "npm run build -- --watch",
     "lint": "eslint .",
-    "test": "jest"
+    "test": "jest",
+    "semantic-release": "semantic-release"
   },
   "husky": {
     "hooks": {
@@ -72,6 +73,7 @@
     "prettier": "^1.17.0",
     "pretty-quick": "^2.0.1",
     "webpack": "^4.30.0",
-    "webpack-cli": "^3.3.1"
+    "webpack-cli": "^3.3.1",
+    "semantic-release": "^16.0.2"
   }
 }
