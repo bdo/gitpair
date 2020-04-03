@@ -96,7 +96,6 @@ Author:     Benoit d'Oncieu <bdoncieu@gmail.com>
     Co-authored-by: Mary Travers <mary@lemontr.ee>
 ```
 
-
 ## Other commands
 
 ### know who you're pairing with

@@ -6,8 +6,8 @@ The following versions of gitpair are currently being supported with security up
 
 | Version | Supported          |
 | ------- | ------------------ |
-| > 1.3.1   | :white_check_mark: |
-| < 1.3.1   | :x:                |
+| > 1.3.1 | :white_check_mark: |
+| < 1.3.1 | :x:                |
 
 ## Reporting a Vulnerability
 
