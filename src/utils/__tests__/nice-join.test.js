@@ -1,7 +1,7 @@
 import niceJoin from '../nice-join'
 
 jest.mock('chalk', () => ({
-  bold: s => s,
+  bold: (s) => s,
 }))
 
 it('returns element if single', () => {

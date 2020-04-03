@@ -1,1 +1,1 @@
-export default string => string.replace(/\n+co-authored-by:.*/gi, '')
+export default (string) => string.replace(/\n+co-authored-by:.*/gi, '')

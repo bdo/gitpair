@@ -6,7 +6,7 @@ import niceJoin from '../utils/nice-join'
 
 export default (...patterns) => {
   try {
-    const coAuthors = patterns.flatMap(pattern => findAuthor(authors, pattern) || [])
+    const coAuthors = patterns.flatMap((pattern) => findAuthor(authors, pattern) || [])
     const newPairingConfig = {
       enabled: true,
       coAuthors: coAuthors.map(({ name, email }) => ({ name, email })),
