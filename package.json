@@ -30,8 +30,7 @@
     "build": "webpack -p",
     "watch": "npm run build -- --watch",
     "lint": "eslint .",
-    "test": "jest",
-    "semantic-release": "semantic-release"
+    "test": "jest"
   },
   "husky": {
     "hooks": {
