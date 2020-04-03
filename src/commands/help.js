@@ -2,31 +2,31 @@ import { bold, red, dim } from 'chalk'
 
 const HELP_TEXT = {
   amend: `
-  Usage: gitpair amend
+  Usage: git pair amend
 
   Amends a commit and adds co-authorship information.
   `,
   off: `
-  Usage: gitpair off
+  Usage: git pair off
 
   Pauses pairing until you turn it on again.
 
   See also: ${bold('`git pair on`')}
   `,
   on: `
-  Usage: gitpair on
+  Usage: git pair on
 
   Resumes pairing with the previous pair.
 
   See also: ${bold('`git pair off`')}
   `,
   info: `
-  Usage: gitpair info
+  Usage: git pair info
 
   Displays who current pairs or if pairing is disabled.
   `,
   with: `
-  Usage: gitpair with <list>
+  Usage: git pair with <list>
 
   Registers you pairing partners.
 
@@ -37,19 +37,19 @@ const HELP_TEXT = {
 
   Examples:
 
-    > gitpair with smi
+    > git pair with smi
     👥 ${dim("you're now pairing with")} ${dim(bold(`John Smith`))}.
 
-    > gitpair with peter paul mary
+    > git pair with peter paul mary
     👥 ${dim("you're now pairing with")} ${dim(bold('Peter Yarrow, Paul Stookey and Mary Travers'))}.
 
-    > gitpair with               
+    > git pair with               
     👤 ${dim(`not pairing with anyone`)}
     
   See also: ${bold('`git pair off`')}
     `,
   trailers: `
-  Usage: gitpair trailers
+  Usage: git pair trailers
 
   Prints the ${bold(`'Co-authored-by'`)} trailer message.
   This is useful for your PR's merge commit message 😉
@@ -57,17 +57,17 @@ const HELP_TEXT = {
   See also: ${bold('`git pair amend`')}
   `,
   version: `
-  Usage: gitpair version
+  Usage: git pair version
 
-  Prints the gitpair version.
+  Prints the git pair version.
   `,
   help: `
-  Usage: gitpair help <command>
+  Usage: git pair help <command>
 
   Give specific help about a command.
   `,
   usage: `
-  Usage: gitpair <command>
+  Usage: git pair <command>
 
   Helps you attribute co-authorship of git commits when pair-programming.
 
@@ -81,7 +81,7 @@ const HELP_TEXT = {
     - help
     - version
 
-  Run ${bold('`gitpair help COMMAND`')} for more information on specific commands.
+  Run ${bold('`git pair help COMMAND`')} for more information on specific commands.
   Visit ${bold('https://github.com/bdo/gitpair')} to learn more about gitpair.
   `,
 }
