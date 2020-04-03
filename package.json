@@ -22,7 +22,8 @@
   },
   "main": "./src/index.js",
   "bin": {
-    "gitpair": "./bin/gitpair.js"
+    "gitpair": "./bin/gitpair.js",
+    "git-pair": "./bin/gitpair.js"
   },
   "scripts": {
     "prepublishOnly": "npm run build",
