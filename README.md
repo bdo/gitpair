@@ -6,9 +6,9 @@
 When pair programming or mob programming on git projects, there is a convention that allows us to document our co-authors in the commit message.
 However, adding the co-authorship information on every single commit is painful.
 
-Gitpair allows you to setup your team members and commit as normal. It then amends your commit to add your co-authors.
+Configure gitpair to know your team members, say who you're pairing with and commit as normal. It then amends your commit to add your co-authors.
 
-Each author will randomly be credited either as the main author or one of the co-authors, so that we can each be credited in our github contributions view!
+Each co-author will be added to the commit message, so that they are also credited in the github contributions view!
 
 ### Before gitpair :sob:
 
@@ -17,8 +17,6 @@ Each author will randomly be credited either as the main author or one of the co
 ### After gitpair :heart_eyes:
 
 ![after](https://github.com/bdo/gitpair/raw/master/docs/after-gitpair.png)
-
-gitpair does not require you to change the way you commit. Simplify use the `git commit` command or your favorite tool!
 
 ## Setup
 
@@ -58,12 +56,12 @@ Add all your co-authors in a .gitpair/authors.json file higher up in directory t
 $ npm install --save-dev husky
 ```
 
-Then configure husky to run `gitpair amend` on every commit, add the following to your `package.json` file:
+Then configure husky to run `git pair amend` on every commit, add the following to your `package.json` file:
 
 ```json
 "husky": {
   "hooks": {
-    "post-commit": "gitpair amend"
+    "post-commit": "git pair amend"
   }
 }
 ```
@@ -75,7 +73,7 @@ Now, you commits will be automatically patched with the co-authoring information
 Say you're doing some mob programming with Peter, Paul and Mary:
 
 ```bash
-gitpair with peter paul mary
+git pair with peter paul mary
 ```
 
 Then commit your work
@@ -101,34 +99,34 @@ Author:     Benoit d'Oncieu <bdoncieu@gmail.com>
 ### know who you're pairing with
 
 ```bash
-gitpair info
+git pair info
 ```
 
 ### stop pairing
 
 ```bash
-gitpair off
+git pair off
 ```
 
 ### resume pairing
 
 ```bash
-gitpair on
+git pair on
 ```
 
 ### print the co-authored-by trailers
 
 ```bash
-gitpair trailers
+git pair trailers
 ```
 
 ### manually amend the last commit
 
 ```bash
-gitpair amend
+git pair amend
 ```
 
-## You don't want to install gitpair globally
+## When you don't want to install gitpair globally
 
 If like me, you don't like to install packages globally, follow these simple instructions.
 
@@ -139,7 +137,7 @@ npm install --save-dev gitpair
 Then add the following alias to your profile script (e.g. ~/.bashrc or ~/.zshrc):
 
 ```bash
-alias gitpair='$(npm bin)/gitpair'
+alias git-pair='$(npm bin)/git-pair'
 ```
 
-And then you can run gitpair by just using `gitpair`.
+And then you can run gitpair by just using `git pair`.
