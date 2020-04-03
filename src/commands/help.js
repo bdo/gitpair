@@ -86,7 +86,7 @@ const HELP_TEXT = {
   `,
 }
 
-const getHelp = command => {
+const getHelp = (command) => {
   if (!command) {
     return HELP_TEXT.usage
   }
@@ -100,4 +100,4 @@ const getHelp = command => {
     `
 }
 
-export default command => console.info(getHelp(command))
+export default (command) => console.info(getHelp(command))
