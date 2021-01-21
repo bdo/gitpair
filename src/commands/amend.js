@@ -22,11 +22,12 @@ export default () => {
 
   const { coAuthors } = pairingConfig
   const trailers = coAuthoringTrailers(coAuthors)
-  const rawCommitMessage = stripCoAuthorship(run('git log -1 --pretty=%B'))
-  const command = `GITPAIR_RUNNING=1 git commit --amend -m"${rawCommitMessage}\n\n${trailers}"`
+  const rawCommitMessage = stripCoAuthorship(run('git', ['log', '-1', '--pretty=%B']))
 
   log(bold('Rewriting last commit with the following info:'))
   log(trailers)
-  run(command)
+  run('git', ['commit', '--amend', '-m', `${rawCommitMessage}\n\n${trailers}`], {
+    env: { ...process.env, GITPAIR_RUNNING: '1' },
+  })
   log(bold('👥 Last commit was rewritten! 😎'))
 }
