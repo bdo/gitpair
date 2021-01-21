@@ -1,3 +1,9 @@
+## [1.5.2](https://github.com/bdo/gitpair/compare/v1.5.1...v1.5.2) (2021-01-21)
+
+### Bug Fixes
+
+- handle embedded quotes in commits ([#85](https://github.com/bdo/gitpair/issues/85)) ([d307166](https://github.com/bdo/gitpair/commit/d307166112ff32952670450cb09f8c11c3e52e1c))
+
 ## [1.5.1](https://github.com/bdo/gitpair/compare/v1.5.0...v1.5.1) (2020-04-03)
 
 ### Bug Fixes
