@@ -1,3 +1,6 @@
-import { execSync } from 'child_process'
+import { spawnSync } from 'child_process'
 
-export default (command) => execSync(command).toString().trim()
+export default (command, args, env) =>
+  spawnSync(command, args, { env: { ...process.env, ...env } })
+    .stdout.toString()
+    .trim()
