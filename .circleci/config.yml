@@ -18,7 +18,7 @@ jobs:
       - checkout
       - *restore_cache
       - run: yarn install --frozen-lockfile
-      - run: yarn audit
+      - run: yarn audit --level moderate || [ $? -le 2 ]
       - save_cache:
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
