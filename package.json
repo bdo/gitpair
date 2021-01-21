@@ -27,7 +27,7 @@
   },
   "scripts": {
     "prepublishOnly": "yarn build",
-    "build": "webpack -p",
+    "build": "webpack --mode production",
     "watch": "yarn build --watch",
     "lint": "eslint .",
     "test": "jest"
