@@ -26,7 +26,7 @@ export default () => {
 
   log(bold('Rewriting last commit with the following info:'))
   log(trailers)
-  run('git', ['commit', '--amend', `${rawCommitMessage}\n\n${trailers}`], {
+  run('git', ['commit', '--amend', '-m', `${rawCommitMessage}\n\n${trailers}`], {
     GITPAIR_RUNNING: 1,
   })
   log(bold('👥 Last commit was rewritten! 😎'))
