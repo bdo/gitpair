@@ -1,3 +1,9 @@
+## [1.5.3](https://github.com/bdo/gitpair/compare/v1.5.2...v1.5.3) (2021-02-04)
+
+### Bug Fixes
+
+- spawnSync args param error ([a099dff](https://github.com/bdo/gitpair/commit/a099dff91d8bc58007a26964ec93027b8504712a))
+
 ## [1.5.2](https://github.com/bdo/gitpair/compare/v1.5.1...v1.5.2) (2021-01-21)
 
 ### Bug Fixes
