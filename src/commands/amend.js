@@ -22,7 +22,7 @@ export default () => {
 
   const { coAuthors } = pairingConfig
   const trailers = coAuthoringTrailers(coAuthors)
-  const rawCommitMessage = stripCoAuthorship(run('git', 'log', '-1', '--pretty=%B'))
+  const rawCommitMessage = stripCoAuthorship(run('git', ['log', '-1', '--pretty=%B']))
 
   log(bold('Rewriting last commit with the following info:'))
   log(trailers)
