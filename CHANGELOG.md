@@ -1,3 +1,9 @@
+## [1.5.4](https://github.com/bdo/gitpair/compare/v1.5.3...v1.5.4) (2021-02-04)
+
+### Bug Fixes
+
+- git amend message fix ([dc6b403](https://github.com/bdo/gitpair/commit/dc6b403ed9ffc0046f8d950623fab0a7813b3d7a))
+
 ## [1.5.3](https://github.com/bdo/gitpair/compare/v1.5.2...v1.5.3) (2021-02-04)
 
 ### Bug Fixes
