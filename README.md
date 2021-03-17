@@ -66,7 +66,7 @@ Then configure husky to run `git pair amend` on every commit, add the following 
 }
 ```
 
-Now, you commits will be automatically patched with the co-authoring information!
+Now, your commits will be automatically patched with the co-authoring information!
 
 ### Tell gitpair you're pairing
 
