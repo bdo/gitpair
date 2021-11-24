@@ -5,17 +5,17 @@ jest.mock('chalk', () => ({
 }))
 
 it('returns element if single', () => {
-  expect(niceJoin(['Peter'])).toEqual('Peter')
+  expect(niceJoin(['Peter'])).toBe('Peter')
 })
 
 it('returns empty string if empty', () => {
-  expect(niceJoin([])).toEqual('')
+  expect(niceJoin([])).toBe('')
 })
 
 it("returns items separated with 'and' if double", () => {
-  expect(niceJoin(['Peter', 'Paul'])).toEqual('Peter and Paul')
+  expect(niceJoin(['Peter', 'Paul'])).toBe('Peter and Paul')
 })
 
 it("returns items separated with command and 'and' if double", () => {
-  expect(niceJoin(['Peter', 'Paul', 'Mary'])).toEqual('Peter, Paul and Mary')
+  expect(niceJoin(['Peter', 'Paul', 'Mary'])).toBe('Peter, Paul and Mary')
 })
