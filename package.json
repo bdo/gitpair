@@ -56,7 +56,7 @@
     "@babel/preset-env": "^7.12.13",
     "@babel/register": "^7.12.13",
     "@commitlint/cli": "^15.0.0",
-    "@commitlint/config-conventional": "^12.0.1",
+    "@commitlint/config-conventional": "^15.0.0",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
     "babel-loader": "^8.1.0",
