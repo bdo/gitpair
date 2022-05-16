@@ -70,7 +70,7 @@
     "eslint-plugin-jest": "^26.1.5",
     "eslint-plugin-prettier": "^4.0.0",
     "husky": "^7.0.4",
-    "jest": "^27.3.1",
+    "jest": "^28.1.0",
     "lint-staged": "^12.1.2",
     "prettier": "^2.4.1",
     "pretty-quick": "^3.1.2",
