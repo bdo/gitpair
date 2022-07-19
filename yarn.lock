@@ -6704,9 +6704,9 @@ schema-utils@^3.1.0, schema-utils@^3.1.1:
     ajv-keywords "^3.5.2"
 
 semantic-release@^19.0.2:
-  version "19.0.2"
-  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-19.0.2.tgz#6011683c06d7b416e5faa5a3f43b22bbf3798aa8"
-  integrity sha512-7tPonjZxukKECmClhsfyMKDt0GR38feIC2HxgyYaBi+9tDySBLjK/zYDLhh+m6yjnHIJa9eBTKYE7k63ZQcYbw==
+  version "19.0.3"
+  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-19.0.3.tgz#9291053ad9890052f28e7c5921d4741530d516fd"
+  integrity sha512-HaFbydST1cDKZHuFZxB8DTrBLJVK/AnDExpK0s3EqLIAAUAHUgnd+VSJCUtTYQKkAkauL8G9CucODrVCc7BuAA==
   dependencies:
     "@semantic-release/commit-analyzer" "^9.0.2"
     "@semantic-release/error" "^3.0.0"
@@ -7572,9 +7572,9 @@ webpack-sources@^3.2.3:
   integrity sha512-/DyMEOrDgLKKIG0fmvtz+4dUX/3Ghozwgm6iPp8KRhvn+eQf9+Q7GWxVNMk3+uCPWfdXYC4ExGBckIXdFEfH1w==
 
 webpack@^5.64.3:
-  version "5.72.1"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.72.1.tgz#3500fc834b4e9ba573b9f430b2c0a61e1bb57d13"
-  integrity sha512-dXG5zXCLspQR4krZVR6QgajnZOjW2K/djHvdcRaDQvsjV9z9vaW6+ja5dZOYbqBBjF6kGXka/2ZyxNdc+8Jung==
+  version "5.73.0"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.73.0.tgz#bbd17738f8a53ee5760ea2f59dce7f3431d35d38"
+  integrity sha512-svjudQRPPa0YiOYa2lM/Gacw0r6PvxptHj4FuEKQ2kX05ZLkjbVc5MnPs6its5j7IZljnIqSVo/OsY2X0IpHGA==
   dependencies:
     "@types/eslint-scope" "^3.7.3"
     "@types/estree" "^0.0.51"
