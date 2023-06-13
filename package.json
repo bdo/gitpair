@@ -74,7 +74,7 @@
     "lint-staged": "^13.0.3",
     "prettier": "^2.4.1",
     "pretty-quick": "^3.1.2",
-    "semantic-release": "^19.0.2",
+    "semantic-release": "^21.0.5",
     "webpack": "^5.64.3",
     "webpack-cli": "^5.0.1"
   }
