@@ -3,7 +3,7 @@
   "version": "1.5.4",
   "license": "MIT",
   "engines": {
-    "node": ">=14"
+    "node": ">=14.18"
   },
   "author": "Benoit d'Oncieu <bdoncieu@gmail.com>",
   "description": "Allow you to commit with more than one person, e.g. Pair programming or Mob programming.",
@@ -27,6 +27,7 @@
     "git-pair": "./bin/gitpair.js"
   },
   "scripts": {
+    "prepublishOnly": "npm build",
     "lint": "eslint .",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "prepare": "husky install"
