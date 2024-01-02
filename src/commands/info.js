@@ -1,4 +1,4 @@
-import { dim } from 'chalk'
+import format from '../utils/format'
 import pairingConfig from '../config/pairing'
 import niceJoin from '../utils/nice-join'
 
@@ -8,7 +8,7 @@ export default () => {
   if (!enabled) {
     console.info('👤 Pairing is currently off!')
     if (coAuthors.length > 0) {
-      console.info(dim(`👥 You were previously pairing with ${niceJoin(names)}`))
+      console.info(format.dim(`👥 You were previously pairing with ${niceJoin(names)}`))
     }
   } else if (coAuthors.length === 0) {
     console.info('👤 Not currently pairing with anyone')

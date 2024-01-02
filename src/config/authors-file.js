@@ -1,7 +1,7 @@
 import path from 'path'
 import fs from 'fs'
 import { homedir } from 'os'
-import { red } from 'chalk'
+import format from '../utils/format'
 import closestPath from '../utils/closest-path'
 import { GITPAIR_DIR, GITPAIR_AUTHORS_FILE } from './paths'
 
@@ -19,8 +19,8 @@ const findAuthorsFilePath = () => {
 const authorsFile = findAuthorsFilePath()
 
 if (!authorsFile) {
-  console.error(red(`Gitpair could not find the ${GITPAIR_AUTHORS_FILE} file!`))
-  console.error(red('See instructions at https://github.com/bdo/gitpair'))
+  console.error(format.red(`Gitpair could not find the ${GITPAIR_AUTHORS_FILE} file!`))
+  console.error(format.red('See instructions at https://github.com/bdo/gitpair'))
   process.exit(1)
 }
 

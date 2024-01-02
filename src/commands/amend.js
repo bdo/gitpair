@@ -1,4 +1,4 @@
-import { bold } from 'chalk'
+import format from '../utils/format'
 import pairingConfig from '../config/pairing'
 import run from '../utils/run'
 import stripCoAuthorship from '../utils/strip-co-authorship'
@@ -24,10 +24,10 @@ export default () => {
   const trailers = coAuthoringTrailers(coAuthors)
   const rawCommitMessage = stripCoAuthorship(run('git', ['log', '-1', '--pretty=%B']))
 
-  log(bold('Rewriting last commit with the following info:'))
+  log(format.bold('Rewriting last commit with the following info:'))
   log(trailers)
   run('git', ['commit', '--amend', '-m', `${rawCommitMessage}\n\n${trailers}`], {
     GITPAIR_RUNNING: 1,
   })
-  log(bold('👥 Last commit was rewritten! 😎'))
+  log(format.bold('👥 Last commit was rewritten! 😎'))
 }

@@ -1,4 +1,4 @@
-import { bold } from 'chalk'
+import format from '../utils/format'
 import pairingConfig from '../config/pairing'
 import clipboardy from 'clipboardy'
 import coAuthoringTrailers from '../utils/co-authoring-trailers'
@@ -18,5 +18,5 @@ export default () => {
   const trailers = coAuthoringTrailers(coAuthors)
   console.info(trailers)
   clipboardy.writeSync(trailers)
-  console.info(bold(`👥 Trailer${coAuthors.length > 1 ? 's' : ''} copied to your clipboard!`))
+  console.info(format.bold(`👥 Trailer${coAuthors.length > 1 ? 's' : ''} copied to your clipboard!`))
 }
