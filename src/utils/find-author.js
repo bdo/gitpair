@@ -1,4 +1,4 @@
-import { red, bold } from 'chalk'
+import format from './format'
 import niceJoin from './nice-join'
 import authorsFile from '../config/authors-file'
 
@@ -25,11 +25,13 @@ export default (authors, pattern) => {
       aliases.find((alias) => alias.toLowerCase().includes(pattern))
   )
   if (!matchByPartial) {
-    throw new AuthorNotFound(red(`Could not find a match for author ${pattern}! Check the ${bold(authorsFile)} file!`))
+    throw new AuthorNotFound(
+      format.red(`Could not find a match for author ${pattern}! Check the ${format.bold(authorsFile)} file!`)
+    )
   }
   if (matchByPartial.length > 1) {
     const names = matchByPartial.map(({ name }) => name)
-    throw new AuthorNotFound(red(`Ambiguous match for ${pattern}! It matches ${niceJoin(names)}`))
+    throw new AuthorNotFound(format.red(`Ambiguous match for ${pattern}! It matches ${niceJoin(names)}`))
   }
   return matchByPartial[0]
 }

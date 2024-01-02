@@ -1,7 +1,7 @@
-import { bold } from 'chalk'
+import format from './format'
 
 export default (items) => {
-  const boldItems = items.map((item) => bold(item))
+  const boldItems = items.map((item) => format.bold(item))
   if (items.length === 0) return ''
   if (items.length === 1) return boldItems[0]
   const last = boldItems.slice(-1)

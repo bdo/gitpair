@@ -1,8 +1,7 @@
+import format from '../format'
 import niceJoin from '../nice-join'
 
-jest.mock('chalk', () => ({
-  bold: (s) => s,
-}))
+format.bold = (s) => s
 
 it('returns element if single', () => {
   expect(niceJoin(['Peter'])).toBe('Peter')
